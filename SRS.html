@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel=stylesheet href=style.css> </link>
+<script src="srs.js"> </script>
+</head>
+<body>
+
+<div id="board">
+
+</div>
+
+<div id="settings">
+<h1> Settings </h1>
+
+<input type="radio" name="rotation" onclick="currentPiece.rotation = 0; update();" checked=true>
+<label for="html">0</label><br>
+<input type="radio" name="rotation" onclick="currentPiece.rotation = 3; update();">
+<label for="html">↺</label><br>
+<input type="radio" name="rotation" onclick="currentPiece.rotation = 2; update();">
+<label for="html">180</label><br>
+<input type="radio" name="rotation" onclick="currentPiece.rotation = 1; update();">
+<label for="html">↻</label><br>
+
+<br>
+
+<input type="radio" name="toRotation" onclick="toRotation = 0; update();">
+<label for="html">0</label><br>
+<input type="radio" name="toRotation" onclick="toRotation = 3; update();">
+<label for="html">↺</label><br>
+<input type="radio" name="toRotation" onclick="toRotation = 2; update();">
+<label for="html">180</label><br>
+<input type="radio" name="toRotation" onclick="toRotation = 1; update();" checked=true>
+<label for="html">↻</label><br>
+
+<input class="textInput" type="number" id="kick" oninput="update();" value=-1>
+<input class="textInput" type="text" id="piece" onchange="updatePiece();" value="T">
+
+</div>
+
+<h1> Credit </h1>
+
+<p> Creator: Spentine </p>
+<p> Skins from TETR.IO: osk </p>
+
+</body>
+</html>

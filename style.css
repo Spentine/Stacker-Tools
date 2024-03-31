@@ -1,0 +1,23 @@
+body {
+  background-color: #22222a;
+  color: #ffffff;
+}
+
+flex {
+  display: flex;
+}
+
+#board {
+  line-height: 0;
+  width: min(900px, 100%);
+}
+
+.boardImg {
+  width: calc(100% / 9);
+}
+
+.textInput {
+  color: #ffffff;
+  background-color: #33333a;
+  font-family: sans-serif;
+}
