@@ -486,7 +486,7 @@ function renderPiece(checkPiece, pieceMino) {
         const y = j + checkPiece.position[1]
         const x = i + checkPiece.position[0]
         var mino = display[y][x]
-        const img = (board[y][x] !== 8) ? pieceMino : 11;
+        const img = (board[y][x] === 0) ? pieceMino : 11;
         mino.setAttribute("src", imageMap[img]);
       }
     }
@@ -503,7 +503,7 @@ function validatePosition(checkPiece) {
       if (pieceMatrix[j][i] === 1) {
         const y = j + checkPiece.position[1]
         const x = i + checkPiece.position[0]
-        if (board[y][x] === 8) {
+        if (board[y][x] !== 0) {
           return false;
         }
       }
