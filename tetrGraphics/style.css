@@ -1,0 +1,28 @@
+body {
+  background-color: #202024;
+  color: #ffffff;
+}
+
+.split.horiz {
+  display: flex;
+  flex-direction: row;
+}
+
+.view.horiz {
+  flex: 1;
+  margin: 4px;
+}
+
+#interfaceView {
+  flex: 0.5 400px;
+}
+
+#renderView {
+  flex: 2;
+}
+
+.divider.horiz {
+  flex: 0 4px;
+  margin: 4px;
+  background-color: #ffffff40;
+}

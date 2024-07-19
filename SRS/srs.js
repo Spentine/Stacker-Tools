@@ -430,7 +430,11 @@ var currentPiece = {
   "rotation": 0,
 };
 
-const imageMap = ["minos/board.png", "minos/z.png", "minos/l.png", "minos/o.png", "minos/s.png", "minos/i.png", "minos/j.png", "minos/t.png", "minos/garbage.png", "minos/unclearable.png", "minos/movement.png", "minos/x.png"];
+const prefix = "../minos/";
+const imageMap = ["board.png", "z.png", "l.png", "o.png", "s.png", "i.png", "j.png", "t.png", "garbage.png", "unclearable.png", "movement.png", "x.png"];
+for (let i=0; i<imageMap.length; i++) {
+  imageMap[i] = prefix + imageMap[i];
+}
 
 function initBoard(w, h) {
   const row = [];
