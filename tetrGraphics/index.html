@@ -14,14 +14,111 @@
         <h1> TetrGraphics </h1>
         <p> generates tetr graphics for use in semi-professional settings </p>
         
+        <hr>
+        
+        <select name="renderType" id="renderSelector">
+          <option value="none" selected="selected"> select option... </option>
+          <option value="mino"> mino </option>
+          <option value="board"> board </option>
+          <option value="queue"> queue </option>
+        </select>
+        
+        <hr>
+        
+        <div class="renderMenu" id="minoMenu">
+          <!-- mino menu -->
+           
+          <h1> Mino Menu </h1>
+          
+          <label for="minoSelector"> Select mino to render: </label>
+          <select name="minoSelection" id="minoSelector">
+            <option value="Z" selected="selected"> Z </option>
+            <option value="L"> L </option>
+            <option value="O"> O </option>
+            <option value="S"> S </option>
+            <option value="I"> I </option>
+            <option value="J"> J </option>
+            <option value="T"> T </option>
+            <option value="hold"> hold </option>
+            <option value="garbage"> garbage </option>
+            <option value="unclearable"> unclearable </option>
+          </select>
+          
+          <br>
+          
+          <button class="renderButton" id="minoRenderButton"> Render Mino </button>
+          
+        </div>
+        
+        <div class="renderMenu" id="boardMenu">
+          <!-- board menu -->
+           
+          <h1> Board Menu </h1>
+          
+          <label for="boardWidthInput"> Width: </label>
+          <input type="number" name="boardWidth" class="textInput" id="boardWidthInput" min="1" value="10">
+          
+          <br>
+          
+          <label for="boardHeightInput"> Height: </label>
+          <input type="number" name="boardHeight" class="textInput" id="boardHeightInput" min="1" value="4">
+          
+          <br>
+          
+          <label for="boardStateInput"> Input Board State: </label>
+          <textarea name="boardState" id="boardStateInput"></textarea>
+          
+          <br>
+          
+          <button class="renderButton" id="boardRenderButton"> Render Board </button>
+          
+        </div>
+        
+        <div class="renderMenu" id="queueMenu">
+          <!-- queue menu -->
+           
+          <h1> Queue Menu </h1>
+          
+          <label for="queueDirectionSelection"> Direction: </label>
+          <select name="queueDirection" id="queueDirectionSelection">
+            <option value="v" selected="selected"> Vertical </option>
+            <option value="h"> Horizontal </option>
+          </select>
+          
+          <br>
+          
+          <label for="pieceDistInput"> Distance Between Pieces: </label>
+          <input type="number" name="pieceDist" class="textInput" id="pieceDistInput" value="0.5">
+          
+          <br>
+          
+          <label for="evenlySpacedCheckbox"> Pieces Evenly Spaced: </label>
+          <input type="checkbox" name="evenlySpaced" class="checkboxInput" id="evenlySpacedCheckbox" checked="true">
+          
+          <br>
+          
+          <label for="pieceQueueInput"> Piece Queue: </label>
+          <input type="text" name="pieceQueue" class="textInput" id="pieceQueueInput">
+          
+          <button class="renderButton" id="queueRenderButton"> Render Queue </button>
+          
+        </div>
+        
       </div>
       <div class="divider horiz">
         
       </div>
       <div class="view horiz" id="renderView">
         <!-- render -->
-         
         
+        <h2> Image Output </h2>
+        <button id="clearImagesButton"> Clear Images </button>
+        
+        <hr>
+        
+        <div id="outputImages">
+          
+        </div>
         
       </div>
     </div>

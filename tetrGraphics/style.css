@@ -21,8 +21,78 @@ body {
   flex: 2;
 }
 
+.renderMenu {
+  display: none;
+}
+
 .divider.horiz {
   flex: 0 4px;
   margin: 4px;
   background-color: #ffffff40;
+}
+
+hr {
+  border-color: #ffffff20;
+  background-color: #ffffff20;
+  margin: 20px 0px;
+  height: 3px;
+  border: 0;
+}
+
+img {
+  /* border: 3px solid #404044; */
+  background-color: #303034;
+  max-width: 100%;
+  max-height: 30vh;
+  margin: 4px;
+}
+
+label {
+  font-size: 24px;
+}
+
+select {
+  background-color: #303034;
+  color: inherit;
+  font-family: inherit;
+  font-size: 24px;
+}
+
+#renderSelector {
+  width: 100%;
+  text-align: center;
+}
+
+button {
+  background-color: #303034;
+  color: inherit;
+  font-family: inherit;
+  font-size: 24px;
+  margin: 4px 0px;
+}
+
+.renderButton {
+  margin: 24px 0px;
+  font-size: 30px;
+}
+
+input.textInput {
+  background-color: #303034;
+  color: inherit;
+  font-family: inherit;
+  font-size: 24px;
+}
+
+input.checkboxInput {
+  transform: scale(1.5);
+  
+}
+
+textarea {
+  background-color: #303034;
+  color: inherit;
+  font-family: monospace;
+  font-size: 24px;
+  width: 95%;
+  height: 200px;
 }
