@@ -10,6 +10,27 @@ const chosenMenuMap = {
   "queue": "queueMenu",
 }
 
+function parseNumberList(str) {
+  const l = [];
+  var n = "";
+  for (let i=0; i<str.length; i++) {
+    const char = str[i];
+    if (["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(char)) {
+      n += char;
+    } else {
+      if (n !== "") {
+        l.push(n);
+        n = "";
+      }
+    }
+  }
+  if (n !== "") {
+    l.push(n);
+    n = "";
+  }
+  return l;
+}
+
 function addRender(img) {
   try {
     if (img) {
@@ -54,7 +75,10 @@ function testRender() {
   
   img = renderQueue("ZLOSIJT", null, "v");
   addRender(img);
-  
+  img = renderQueue("ZSIOLJTOSIZJLTOSZTIJLTZSLOJI", [7, 14, 21], "v");
+  addRender(img);
+  img = renderQueue("ZSIOLJTOSIZJLTOSZTIJLTZSLOJI", [7, 14, 21], "h");
+  addRender(img);
   img = renderQueue("IITTIT", null, "v");
   addRender(img);
   img = renderQueue("OOTOI", null, "v");
@@ -82,6 +106,7 @@ function interactivity() {
   const pieceDistInput = document.getElementById("pieceDistInput");
   const evenlySpacedCheckbox = document.getElementById("evenlySpacedCheckbox");
   const pieceQueueInput = document.getElementById("pieceQueueInput");
+  const borderPositionsInput = document.getElementById("borderPositionsInput");
   const queueRenderButton = document.getElementById("queueRenderButton");
   
   // select render type
@@ -131,7 +156,7 @@ function interactivity() {
   queueRenderButton.addEventListener("click", function () {
     const img = renderQueue(
       pieceQueueInput.value,
-      null,
+      parseNumberList(borderPositionsInput.value),
       queueDirectionSelection.value,
       pieceDistInput.value,
       evenlySpacedCheckbox.checked

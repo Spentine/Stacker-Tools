@@ -278,6 +278,7 @@ function renderQueue(inputQueue, dividers, direction="v", spacing=0.5, evenlySpa
     dividers = [];
   }
   
+  /*
   try {
     dividers.sort((a, b) => a - b);
   } catch (e) {
@@ -286,6 +287,7 @@ function renderQueue(inputQueue, dividers, direction="v", spacing=0.5, evenlySpa
     console.log(e);
     return null;
   }
+  */
   
   // handle weird ass inputs
   try {
@@ -314,6 +316,7 @@ function renderQueue(inputQueue, dividers, direction="v", spacing=0.5, evenlySpa
   
   const canvas = getCanvas();
   const ctx = canvas.getContext("2d");
+  const dividerPositions = [0];
   
   if (direction === "v") {
     
@@ -352,6 +355,7 @@ function renderQueue(inputQueue, dividers, direction="v", spacing=0.5, evenlySpa
         
         renderPieceOnContext(ctx, piece, middle, tileSize * (sum + (1 + b.max - b.min) / 2), true, true, 0);
         sum += spacing + 1 + b.max - b.min;
+        dividerPositions.push(sum - spacing / 2);
       });
       
     } else {
@@ -361,9 +365,20 @@ function renderQueue(inputQueue, dividers, direction="v", spacing=0.5, evenlySpa
       
       queue.forEach((piece, index) => {
         renderPieceOnContext(ctx, piece, middle, tileSize * spacing * (index + 0.5), true, true, 0);
+        dividerPositions.push(spacing * index);
       });
       
     }
+    
+    // draw dividers
+    ctx.fillStyle = "#ffffff";
+    ctx.globalAlpha = 0.5;
+    
+    dividers.forEach(function (divider) {
+      if (dividerPositions[divider]) { // handle invalid indicies (number larger than array)
+        ctx.fillRect(10, tileSize * dividerPositions[divider] - 5, tileSize * width - 20, 10);
+      }
+    });
     
   } else {
     var max = 0;
@@ -396,6 +411,7 @@ function renderQueue(inputQueue, dividers, direction="v", spacing=0.5, evenlySpa
         
         renderPieceOnContext(ctx, piece, tileSize * (sum + (1 + b.max - b.min) / 2), middle, true, true, 0);
         sum += spacing + 1 + b.max - b.min;
+        dividerPositions.push(sum - spacing / 2);
       });
       
     } else {
@@ -405,9 +421,21 @@ function renderQueue(inputQueue, dividers, direction="v", spacing=0.5, evenlySpa
       
       queue.forEach((piece, index) => {
         renderPieceOnContext(ctx, piece, tileSize * spacing * (index + 0.5), middle, true, true, 0);
+        dividerPositions.push(spacing * index);
       });
       
     }
+    
+    // draw dividers
+    ctx.fillStyle = "#ffffff";
+    ctx.globalAlpha = 0.5;
+    
+    dividers.forEach(function (divider) {
+      if (dividerPositions[divider]) {
+        ctx.fillRect(tileSize * dividerPositions[divider] - 5, 10, 10, tileSize * height - 20);
+      }
+    });
+    
   }
   
   const image = canvasToImage(canvas);
