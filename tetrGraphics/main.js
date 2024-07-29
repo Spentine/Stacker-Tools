@@ -1,4 +1,5 @@
 import { renderMino, stringToBoard, renderBoard, renderQueue } from "./tetrGraphics.js";
+import { convertScreenshot, addPaste } from "./boardScreenshotReader.js";
 
 var outputElement;
 var currentMenu = null;
@@ -71,6 +72,16 @@ function testRender() {
     OO-LLLIJJJ
     `
     , 10, 5)); // DT
+  addRender(img);
+  
+  img = renderBoard(stringToBoard(`
+    ZLOSIJT#--
+    ZLOSIJT#--
+    ZLOSIJT#--
+    ZLOSIJT#--
+    ZLOSIJT#--
+    `
+    , 10, 5)); // colors
   addRender(img);
   
   img = renderQueue("ZLOSIJT", null, "v");
@@ -173,3 +184,7 @@ function main() {
 }
 
 document.addEventListener("DOMContentLoaded", main());
+addPaste((img, width) => {
+  const renderedImage = renderBoard(convertScreenshot(img, document.getElementById("boardWidthInput").value));
+  addRender(renderedImage);
+});
