@@ -150,16 +150,18 @@ function getCanvas() {
 function canvasToImage(canvas) { // => image
   const img = document.createElement("img");
   img.src = canvas.toDataURL("image/png");
-  return img;
+  return {"image": img, "width": canvas.width, "height": canvas.height};
 }
 
-function resizeImage(image, width, height) {
+async function resizeImage(image, width, height) {
   const canvas = getCanvas()
   canvas.width = width;
   canvas.height = height;
   
+  const img = await importImage(image.image.src);
+  
   const ctx = canvas.getContext('2d');
-  ctx.drawImage(image, 0, 0, width, height);
+  ctx.drawImage(img, 0, 0, width, height);
   
   return canvasToImage(canvas);
 }

@@ -33,17 +33,16 @@ function parseNumberList(str) {
   return l;
 }
 
-function addRender(img) {
+async function addRender(img) {
   try {
-    if (img) {
+    if (img.image) {
       const resizeFactor = Number(resizeFactorElement.value);
       
       if (resizeFactor !== 1) {
-        img = resizeImage(img, Math.round(img.width * resizeFactor), Math.round(img.height * resizeFactor));
-        console.log(img);
+        img = await resizeImage(img, Math.round(img.width * resizeFactor), Math.round(img.height * resizeFactor));
       }
       
-      outputElement.appendChild(img);
+      outputElement.appendChild(img.image);
       outputElement.appendChild(document.createElement("br"));
     } else {
       console.log("The image is not truthy. (" + img + ")");
