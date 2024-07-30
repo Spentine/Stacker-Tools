@@ -1,7 +1,8 @@
-import { renderMino, stringToBoard, renderBoard, renderQueue } from "./tetrGraphics.js";
+import { renderMino, stringToBoard, renderBoard, renderQueue, resizeImage } from "./tetrGraphics.js";
 import { convertScreenshot, addPaste } from "./boardScreenshotReader.js";
 
 var outputElement;
+var resizeFactorElement;
 var currentMenu = null;
 
 const chosenMenuMap = {
@@ -35,6 +36,13 @@ function parseNumberList(str) {
 function addRender(img) {
   try {
     if (img) {
+      const resizeFactor = Number(resizeFactorElement.value);
+      
+      if (resizeFactor !== 1) {
+        img = resizeImage(img, Math.round(img.width * resizeFactor), Math.round(img.height * resizeFactor));
+        console.log(img);
+      }
+      
       outputElement.appendChild(img);
       outputElement.appendChild(document.createElement("br"));
     } else {
@@ -101,6 +109,7 @@ function testRender() {
 // give interactivity to UI
 function interactivity() {
   // outputElement is already defined in main()
+  // reizeFactorElement is already defined in main()
   const renderSelector = document.getElementById("renderSelector");
   
   const clearImagesButton = document.getElementById("clearImagesButton");
@@ -178,6 +187,7 @@ function interactivity() {
 
 function main() {
   outputElement = document.getElementById("outputImages");
+  resizeFactorElement = document.getElementById("resizeFactorInput");
   
   // testRender();
   interactivity();

@@ -153,6 +153,17 @@ function canvasToImage(canvas) { // => image
   return img;
 }
 
+function resizeImage(image, width, height) {
+  const canvas = getCanvas()
+  canvas.width = width;
+  canvas.height = height;
+  
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(image, 0, 0, width, height);
+  
+  return canvasToImage(canvas);
+}
+
 function getMinoData(mino) {
   return [currentSkin, ...piecePosMap[mino], tileSize, tileSize];
 }
@@ -445,4 +456,4 @@ function renderQueue(inputQueue, dividers, direction="v", spacing=0.5, evenlySpa
 
 initData();
 
-export { renderMino, stringToBoard, renderBoard, renderQueue };
+export { resizeImage, renderMino, stringToBoard, renderBoard, renderQueue };
