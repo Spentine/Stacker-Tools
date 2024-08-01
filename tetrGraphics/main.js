@@ -193,7 +193,7 @@ function main() {
 }
 
 document.addEventListener("DOMContentLoaded", main());
-addPaste((img, width) => {
+addPaste((img) => {
   const renderedImage = renderBoard(convertScreenshot(img, document.getElementById("boardWidthInput").value));
   addRender(renderedImage);
 });

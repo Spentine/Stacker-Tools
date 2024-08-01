@@ -10,21 +10,34 @@ function importImage(url) {
   })
 }
 
+/*
 function getHue(r, g, b) {
   r /= 255;
   g /= 255;
   b /= 255;
-  /*
-  var hue;
-  if ((r >= g) && (g >= b)) {
-      hue = 60*(g-b)/(r-b);
-  } else if ((g > r) && (r >= b)) {
-      hue = 60*(2 - (r-b)/(g-b));
-  }
-  
-  return hue;
-  */
   return (Math.atan2(1.732050808 * (g - b), (2 * r - g - b)) + 2 * Math.PI) % (2 * Math.PI);
+}
+*/
+
+function rgbToHsl(r, g, b){
+  r /= 255, g /= 255, b /= 255;
+  var max = Math.max(r, g, b), min = Math.min(r, g, b);
+  var h, s, l = (max + min) / 2;
+
+  if(max == min){
+      h = s = 0; // achromatic
+  }else{
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch(max){
+          case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+          case g: h = (b - r) / d + 2; break;
+          case b: h = (r - g) / d + 4; break;
+      }
+      h /= 6;
+  }
+
+  return {"hue": h, "saturation": s, "lightness": l};
 }
 
 function canvasToImage(canvas) { // => image
@@ -39,17 +52,35 @@ function boardToStr(board) {
 
 // == screenshot reader ==
 
-const pieceHues = {
-  "#": 0,
-  "Z": 6.283,
-  "Z": 0.001,
-  "L": 0.385,
-  "O": 0.855,
-  "S": 1.424,
-  "I": 2.765,
-  "J": 4.243,
-  "T": 4.9,
-}
+/*
+const pieceHues = [
+  ["Z", 0],
+  ["L", 0.06],
+  ["O", 0.13],
+  ["S", 0.22],
+  ["I", 0.43],
+  ["J", 0.74],
+  ["T", 0.75],
+];
+*/
+
+
+const pieceHues = [
+  ["Z", 321 / 360],
+  ["Z", 16 / 360],
+  ["L", 17 / 360],
+  ["L", 39 / 360],
+  ["O", 40 / 360],
+  ["O", 62 / 360],
+  ["S", 63 / 360],
+  ["S", 142 / 360],
+  ["I", 143 / 360],
+  ["I", 199 / 360],
+  ["J", 200 / 360],
+  ["J", 264 / 360],
+  ["T", 265 / 360],
+  ["T", 320 / 360],
+]
 
 function compareHues(x, y) {
   return Math.abs((3 * Math.PI + x - y) % (2 * Math.PI) - Math.PI);
@@ -74,33 +105,34 @@ function convertScreenshot(img, width) {
       const x = Math.round(tileSize * (columnIndex + 0.5));
       const y = Math.round(tileSize * (rowIndex + 0.5));
       const pixel = ctx.getImageData(x, y, 1, 1).data;
-      var value = null;
       
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(x, y, 5, 5);
+      // ctx.fillStyle = "#ffffff";
+      // ctx.fillRect(x, y, 5, 5);
       
-      const brightness = pixel[0] + pixel[1] + pixel[2];
-      // console.log(brightness);
+      const hsl = rgbToHsl(pixel[0], pixel[1], pixel[2]);
+      // console.log(rowIndex, columnIndex, hsl);
       
-      if (brightness < 50) {
+      if (hsl.lightness < 0.1) {
         row.push(null);
-      } else if (brightness < 260) {
+      } else if (hsl.saturation < 0.1) {
         row.push("#");
       } else {
         if (pixel[3] > 127) {
-          value = getHue(pixel[0], pixel[1], pixel[2]);
-        }
-        
-        var closestPiece = null;
-        var closestHue = Infinity;
-        
-        const pieces = Object.keys(pieceHues);
-        for (let piece=0; piece<pieces.length; piece++) {
-          const diff = compareHues(pieceHues[pieces[piece]], value);
-          if (diff < closestHue) {
-            closestHue = diff;
-            closestPiece = pieces[piece];
+          
+          var closestPiece = null;
+          var closestHue = Infinity;
+          
+          for (let piece=0; piece<pieceHues.length; piece++) {
+            const diff = compareHues(pieceHues[piece][1], hsl.hue);
+            // console.log(hsl.hue, diff);
+            if (diff < closestHue) {
+              closestHue = diff;
+              closestPiece = pieceHues[piece][0];
+            }
           }
+          
+        } else {
+          closestPiece = null;
         }
         
         row.push(closestPiece);
@@ -128,7 +160,7 @@ function addPaste(fn) {
     reader.addEventListener("load", async function() {
       const image = await importImage(reader.result);
       
-      fn(image, 10);
+      fn(image);
     }, false,);
     
     if (file) {
