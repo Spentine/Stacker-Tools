@@ -43,7 +43,7 @@ async function addRender(img) {
       }
       
       outputElement.appendChild(img.image);
-      outputElement.appendChild(document.createElement("br"));
+      // outputElement.appendChild(document.createElement("br"));
     } else {
       console.log("The image is not truthy. (" + img + ")");
     }
@@ -140,6 +140,7 @@ function interactivity() {
   const boardHeightInput = document.getElementById("boardHeightInput");
   const boardStateInput = document.getElementById("boardStateInput");
   const boardGreyscaleButton = document.getElementById("boardGreyscaleButton");
+  const boardMirrorButton= document.getElementById("boardMirrorButton");
   const boardRenderButton = document.getElementById("boardRenderButton");
   
   const queueDirectionSelection = document.getElementById("queueDirectionSelection");
@@ -167,6 +168,35 @@ function interactivity() {
     addRender(img);
   });
   
+  boardMirrorButton.addEventListener("click", function() {
+    const colorMap = {
+      "-": "-",
+      "Z": "S",
+      "L": "J",
+      "O": "O",
+      "S": "Z",
+      "I": "I",
+      "J": "L",
+      "T": "T",
+      "#": "#",
+      "h": "h",
+      "@": "@",
+    };
+    
+    boardStateInput.value = boardToStr( // convert back to string
+      stringToBoard( // get board state
+        boardStateInput.value,
+        boardWidthInput.value,
+        boardHeightInput.value
+      ).map(row => 
+        row.reverse().map(mino => // reverse rows
+          colorMap[mino] // change minos
+        )
+      )
+    );
+    
+  });
+  
   boardGreyscaleButton.addEventListener("click", function() {
     const whitelist = [
       "Z", "L", "O", "S", "I", "J", "T", "h", /* "#", */ "@",
@@ -188,8 +218,8 @@ function interactivity() {
     const img = renderBoard(stringToBoard(
       boardStateInput.value,
       boardWidthInput.value,
-      boardHeightInput.value)
-    );
+      boardHeightInput.value
+    ));
     addRender(img);
   });
   
@@ -199,7 +229,7 @@ function interactivity() {
       parseNumberList(borderPositionsInput.value),
       queueDirectionSelection.value,
       pieceDistInput.value,
-      evenlySpacedCheckbox.checked
+      evenlySpacedCheckbox.checked,
     );
     addRender(img);
   });
