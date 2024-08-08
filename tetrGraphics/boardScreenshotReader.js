@@ -170,4 +170,4 @@ function addPaste(fn) {
   });
 }
 
-export { convertScreenshot, addPaste };
+export { convertScreenshot, addPaste, boardToStr };

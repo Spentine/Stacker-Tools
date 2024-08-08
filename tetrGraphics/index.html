@@ -17,9 +17,9 @@
         <hr>
         
         <select name="renderType" id="renderSelector">
-          <option value="none" selected="selected"> select option... </option>
+          <!-- <option value="none"> select option... </option> -->
           <option value="mino"> mino </option>
-          <option value="board"> board </option>
+          <option value="board" selected="selected"> board </option>
           <option value="queue"> queue </option>
         </select>
         
@@ -67,6 +67,10 @@
           
           <label for="boardStateInput"> Input Board State: </label>
           <textarea name="boardState" id="boardStateInput"></textarea>
+          
+          <br>
+          
+          <button id="boardGreyscaleButton"> Greyscale Board </button>
           
           <br>
           

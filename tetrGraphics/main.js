@@ -1,5 +1,5 @@
 import { renderMino, stringToBoard, renderBoard, renderQueue, resizeImage } from "./tetrGraphics.js";
-import { convertScreenshot, addPaste } from "./boardScreenshotReader.js";
+import { convertScreenshot, addPaste, boardToStr } from "./boardScreenshotReader.js";
 
 var outputElement;
 var resizeFactorElement;
@@ -105,6 +105,26 @@ function testRender() {
   addRender(img);
 }
 
+function changeMenu(chosenMenu) {
+  console.log("Chosen Menu: " + chosenMenu);
+  
+  var chosenMenuId = chosenMenuMap[chosenMenu];
+  if (chosenMenuId === undefined) {
+    console.log("Menu not set!");
+    return null;
+  }
+  
+  if (currentMenu) {
+    document.getElementById(currentMenu).style.display = "none";
+  }
+  
+  if (chosenMenuId) {
+    document.getElementById(chosenMenuId).style.display = "block";
+  }
+  
+  currentMenu = chosenMenuId;
+}
+
 // give interactivity to UI
 function interactivity() {
   // outputElement is already defined in main()
@@ -119,6 +139,7 @@ function interactivity() {
   const boardWidthInput = document.getElementById("boardWidthInput");
   const boardHeightInput = document.getElementById("boardHeightInput");
   const boardStateInput = document.getElementById("boardStateInput");
+  const boardGreyscaleButton = document.getElementById("boardGreyscaleButton");
   const boardRenderButton = document.getElementById("boardRenderButton");
   
   const queueDirectionSelection = document.getElementById("queueDirectionSelection");
@@ -130,24 +151,7 @@ function interactivity() {
   
   // select render type
   renderSelector.addEventListener("change", function() {
-    const chosenMenu = renderSelector.value;
-    console.log("Chosen Menu: " + chosenMenu);
-    
-    var chosenMenuId = chosenMenuMap[chosenMenu];
-    if (chosenMenuId === undefined) {
-      console.log("Menu not set!");
-      return null;
-    }
-    
-    if (currentMenu) {
-      document.getElementById(currentMenu).style.display = "none";
-    }
-    
-    if (chosenMenuId) {
-      document.getElementById(chosenMenuId).style.display = "block";
-    }
-    
-    currentMenu = chosenMenuId;
+    changeMenu(renderSelector.value);
   });
   
   clearImagesButton.addEventListener("click", function() {
@@ -161,6 +165,23 @@ function interactivity() {
   minoRenderButton.addEventListener("click", function() {
     const img = renderMino(minoSelector.value);
     addRender(img);
+  });
+  
+  boardGreyscaleButton.addEventListener("click", function() {
+    const whitelist = [
+      "Z", "L", "O", "S", "I", "J", "T", "h", /* "#", */ "@",
+    ];
+    
+    var board = "";
+    for (let i=0; i<boardStateInput.value.length; i++) {
+      if (whitelist.includes(boardStateInput.value[i])) {
+        board += "#";
+      } else {
+        board += boardStateInput.value[i];
+      }
+    }
+    
+    boardStateInput.value = board;
   });
   
   boardRenderButton.addEventListener("click", function() {
@@ -190,10 +211,13 @@ function main() {
   
   // testRender();
   interactivity();
+  changeMenu("board");
 }
 
 document.addEventListener("DOMContentLoaded", main());
 addPaste((img) => {
-  const renderedImage = renderBoard(convertScreenshot(img, document.getElementById("boardWidthInput").value));
+  const board = convertScreenshot(img, document.getElementById("boardWidthInput").value);
+  boardStateInput.value = boardToStr(board);
+  const renderedImage = renderBoard(board);
   addRender(renderedImage);
 });

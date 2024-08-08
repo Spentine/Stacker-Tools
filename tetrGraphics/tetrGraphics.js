@@ -186,7 +186,7 @@ function renderMino(mino) {
 }
 
 function stringToBoard(str, width, height) {
-  const board = new Array(height);
+  const board = [];
   
   var filteredStr = "";
   const allowedChars = Object.keys(charPieceMap);
@@ -200,10 +200,15 @@ function stringToBoard(str, width, height) {
     filteredStr = "-" + filteredStr;
   }
   
+  // in case the height is different than the one specified
+  if (filteredStr.length > width * height && filteredStr.length % width === 0) {
+    height = filteredStr.length / width;
+  }
+  
   var charIndex = 0;
   for (let rowIndex=0; rowIndex<height; rowIndex++) {
     const row = new Array(width);
-    board[rowIndex] = row;
+    board.push(row);
     
     for (let columnIndex=0; columnIndex<width; columnIndex++) {
       row[columnIndex] = filteredStr[charIndex];
