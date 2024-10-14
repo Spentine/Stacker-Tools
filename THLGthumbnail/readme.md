@@ -1,0 +1,2 @@
+# uhh
+this was made for a friend who owns some channel for tetrio high level gameplay and they havent automated their thumbnail creation yet so i thought might as well make it easier for them with a small sideproject

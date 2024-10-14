@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="thumbnail.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/identicon.js/2.3.3/identicon.min.js" integrity="sha512-CysAtcAIap1rMa9900ATF37dJ9oxvBalujRaC6cn07hLkXeU7lC5FS7TD1NB9kyyYRRlUhqLjiQY+eS3Y/xikg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="main.js" type="module"> </script>
+  </head>
+  <body>
+    <h1> THLG Thumbnail Generator </h1>
+    
+    <label for="leftUserInput"> Left User </label>
+    <input type="text" id="leftUserInput" value="caboozled_pie">
+    <label for="rightUserInput"> RightUser </label>
+    <input type="text" id="rightUserInput" value="syakegohan">
+    
+    <br>
+    
+    <button id="autofillButton"> Autofill </button>
+    <button id="autofillRenderButton"> Autofill and Render </button>
+    
+    <hr>
+    
+    <h2> textData </h2>
+    
+    <label for="leftUsername"> leftUsername </label>
+    <input type="text" id="leftUsername">
+    <label for="rightUsername"> rightUsername </label>
+    <input type="text" id="rightUsername">
+    
+    <br>
+    
+    <label for="leftRankText"> leftRankText </label>
+    <input type="text" id="leftRankText">
+    <label for="rightRankText"> rightRankText</label>
+    <input type="text" id="rightRankText">
+    
+    <br>
+    
+    <label for="topCenterText"> topCenterText </label>
+    <input type="text" id="topCenterText">
+    
+    <br>
+    <label for="ftText"> ftText </label>
+    <input type="text" id="ftText">
+    <label for="bottomCenterText"> bottomCenterText </label>
+    <input type="text" id="bottomCenterText">
+    
+    <h2> imageData </h2>
+    
+    <label for="userImage1"> userImage1 </label>
+    <input type="file" id="userImage1">
+    <br>
+    <label for="userImage2"> userImage2 </label>
+    <input type="file" id="userImage2">
+    <br>
+    <label for="userRank1"> userRank1 </label>
+    <input type="file" id="userRank1">
+    <br>
+    <label for="userRank2"> userRank2 </label>
+    <input type="file" id="userRank2">
+    <br>
+    <label for="bgImg"> bgImg </label>
+    <input type="file" id="bgImg">
+    <br>
+    
+    <br>
+    
+    <button id="renderButton"> Render </button>
+    
+    <hr>
+    
+    <h2> outputElement </h2>
+    
+    <div id="outputElement">
+      
+    </div>
+  </body>
+</html>

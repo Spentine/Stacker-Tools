@@ -1,0 +1,79 @@
+.leftSideBox {
+  position: fixed;
+  top: 0;
+  width: 500px;
+  height: 72px;
+  
+  padding: 12px;
+  border: 2px solid #266dcd;
+  border-left: none;
+  border-radius: 0 3px 3px 0;
+  box-shadow: 0 0 16px #266DCD88;
+  background: linear-gradient(to left,#19355FDD 0,#19355F22 100%),url('./crystal.png');
+  font-family: HUN;
+  text-align: right;
+  
+  transform: perspective(500px) rotateY(40deg) rotateX(-12deg);
+}
+
+.rightSideBox {
+  position: fixed;
+  top: 0;
+  width: 500px;
+  height: 72px;
+  
+  padding: 12px;
+  border: 2px solid #cd2626;
+  border-right: none;
+  border-radius: 3px 0 0 3px;
+  box-shadow: 0 0 16px #cd262688;
+  background: linear-gradient(to right,#5f1919DD 0,#5f191922 100%),url('./crystal.png');
+  color: #fff;
+  font-family: HUN;
+  text-align: left;
+  
+  transform: perspective(500px) rotateY(-40deg) rotateX(-12deg);
+}
+
+.leftSideBoxWrap {
+  position: fixed;
+  transform: scale(2) translate(-137px, 20px); /* looks close enough */
+}
+
+.rightSideBoxWrap {
+  position: fixed;
+  transform: scale(2) translate(250px, 20px);
+}
+
+.usernameLeft {
+  font-size: 48px;
+  transform: scale(0.8, 1);
+  transform-origin: 100%;
+  font-weight: bold;
+  margin: 0;
+}
+
+.usernameRight {
+  font-size: 48px;
+  transform: scale(0.8, 1);
+  transform-origin: 0%;
+  font-weight: bold;
+  margin: 0;
+}
+
+.rank {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+svg {
+  background-color: #333;
+}
+
+img {
+  position: fixed;
+  width: 1280px;
+  height: 720px;
+  object-fit: none;
+}

@@ -1,0 +1,15 @@
+body {
+  background-color: #222;
+  color: #fff;
+}
+
+p, label {
+  font-size: 20px;
+}
+
+input, button {
+  background-color: #333;
+  color: #fff;
+  font-family: inherit;
+  font-size: 20px;
+}
