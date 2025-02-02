@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "HUN";
+  src: url("hun2.ttf");
+}
+
+@font-face {
+  font-family: "Config";
+  src: url("configRegular.ttf");
+}
+
+@font-face {
+  font-family: "Pro Font Windows";
+  src: url("proFontWindows.ttf");
+}
+
+body {
+  background-color: #302830;
+  font-family: Config;
+  color: #ffffff;
+  font-weight: normal;
+  margin: 0px;
+}
+
+h1 {
+  font-weight: inherit;
+  margin: inherit;
+  
+  text-align: center;
+}
+
+.mono {
+  font-family: "Pro Font Windows";
+}
+
+.horizontal-container {
+  background-color: #201820;
+  margin: 16px;
+  padding: 8px;
+  border-radius: 8px;
+}
