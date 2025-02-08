@@ -93,7 +93,7 @@ For boolean values, both integers (0, 1) and boolean strings ("false", "true") w
 - number `options.gmargin`: gravity margin time
   - $0 \le x \le 100000$
   - $x \equiv 0 \mod 1$ (`step=1`)
-- number `options.garbagemultiplier`: gravity multiplier
+- number `options.garbagemultiplier`: garbage multiplier
   - $0 \le x \le 100$
   - $x \equiv 0 \mod 0.1$ (`step=0.1`)
 - number `options.garbagemargin`: garbage margin time
