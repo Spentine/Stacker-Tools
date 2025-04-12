@@ -21,11 +21,39 @@ body {
   margin: 0px;
 }
 
-h1 {
+h1, h2 {
   font-weight: inherit;
   margin: inherit;
   
   text-align: center;
+}
+
+h2 {
+  margin: 8px;
+}
+
+p, label {
+  font-size: 16px;
+}
+
+input {
+  font-size: 16px;
+  
+  background-color: #302830;
+  font-family: inherit;
+  color: #ffffff;
+  
+  flex: 1;
+}
+
+hr {
+  border: 1px solid #403840;
+}
+
+.setting-input {
+  border: 1px solid #403840;
+  border-radius: 2px;
+  margin: 2px;
 }
 
 .mono {
@@ -37,4 +65,73 @@ h1 {
   margin: 16px;
   padding: 8px;
   border-radius: 8px;
+}
+
+.vertical-container {
+  background-color: #201820;
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  
+  min-width: 384px;
+}
+
+.setting-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px;
+  
+  /* grid-template-columns: repeat(auto-fit, minmax(384px, 1fr)); */
+}
+
+.setting-pair {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.checkbox-container {
+  margin: 2px;
+  flex: 1;
+  
+  display: flex;
+}
+
+.checkbox-checkbox {
+  display: none;
+}
+
+.checkbox-button {
+  background-color: #503040;
+  border-radius: 2px;
+  padding: 2px;
+  flex: 1;
+  transition: 0.05s;
+  
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.checkbox-checkbox:checked + .checkbox-button {
+  background-color: #305040;
+  color: #ffffff;
+}
+
+.checkbox-button:after {
+  text-align: center;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.checkbox-checkbox:checked + .checkbox-button:after {
+  content: "ON";
+  color: #a0e0c0;
+}
+
+.checkbox-checkbox:not(:checked) + .checkbox-button:after {
+  content: "OFF";
+  color: #e0a0c0;
 }

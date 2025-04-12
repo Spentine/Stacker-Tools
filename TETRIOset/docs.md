@@ -59,6 +59,8 @@ For boolean values, both integers (0, 1) and boolean strings ("false", "true") w
 - boolean `options.display_hold`: use HOLD queue
 - number `options.nextcount`: next pieces
   - $1 \le x \le 6$
+
+### (Movement)
 - boolean `options.infinite_movement`: infinite movement
 - boolean `options.infinite_hold`: infinite HOLD
 - boolean `options.display_shadow`: show shadow piece
@@ -146,6 +148,8 @@ For boolean values, both integers (0, 1) and boolean strings ("false", "true") w
 - number `options.garbageare`: garbage ARE
   - $1 \le x \le 300$
   - $x \equiv 0 \mod 1$ (`step=1`)
+- number `garbagearebump`: garbage ARE hesitation
+  - $0 \le x \le 300$
 - boolean `options.garbagequeue`: garbage queue
 - string `options.garbageblocking`: garbage blocking
   - valid strings listed in [Garbage Blocking](#garbage-blocking)
