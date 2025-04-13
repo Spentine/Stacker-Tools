@@ -14,14 +14,16 @@
 }
 
 body {
-  background-color: #302830;
+  /* background-color: #302830; */
+  background: linear-gradient(45deg, #302830, #282028);
+  background-size: 100px 100px;
   font-family: Config;
   color: #ffffff;
   font-weight: normal;
   margin: 0px;
 }
 
-h1, h2 {
+h1, h2, h3 {
   font-weight: inherit;
   margin: inherit;
   
@@ -32,11 +34,23 @@ h2 {
   margin: 8px;
 }
 
-p, label {
-  font-size: 16px;
+h3 {
+  font-size: 20px;
 }
 
-input {
+p {
+  margin: 0px;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+label {
+  margin: 0px;
+  font-size: 16px;
+  color: #cccccc;
+}
+
+input, select {
   font-size: 16px;
   
   background-color: #302830;
@@ -50,14 +64,51 @@ hr {
   border: 1px solid #403840;
 }
 
+.full-container {
+  max-width: 1000px;
+  margin: auto;
+}
+
 .setting-input {
   border: 1px solid #403840;
   border-radius: 2px;
   margin: 2px;
 }
 
+.setting-button {
+  background-color: #403840;
+  font-size: 16px;
+  font-family: inherit;
+  color: #ffffff;
+  
+  border: 1px solid #504850;
+  border-radius: 2px;
+  margin: 2px;
+  transition: 0.1s;
+}
+
+.setting-button:hover {
+  background-color: #504850;
+  border: 1px solid #605860;
+  color: #ffffff;
+}
+
+.setting-button:active {
+  background-color: #305040;
+  border: 1px solid #507060;
+  color: #ffffff;
+}
+
 .mono {
   font-family: "Pro Font Windows";
+}
+
+.output-code {
+  background-color: #302830;
+  padding: 4px;
+  border-radius: 2px;
+  word-wrap: break-word;
+  min-height: 20px;
 }
 
 .horizontal-container {
@@ -91,23 +142,29 @@ hr {
   gap: 4px;
 }
 
-.checkbox-container {
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainCheckbox-container {
   margin: 2px;
   flex: 1;
   
   display: flex;
 }
 
-.checkbox-checkbox {
+.mainCheckbox-checkbox {
   display: none;
 }
 
-.checkbox-button {
+.mainCheckbox-button {
   background-color: #503040;
   border-radius: 2px;
   padding: 2px;
   flex: 1;
-  transition: 0.05s;
+  transition: 0.1s;
   
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -115,23 +172,50 @@ hr {
   user-select: none;
 }
 
-.checkbox-checkbox:checked + .checkbox-button {
+.mainCheckbox-checkbox:checked + .mainCheckbox-button {
   background-color: #305040;
   color: #ffffff;
 }
 
-.checkbox-button:after {
+.mainCheckbox-button:after {
   text-align: center;
   color: #ffffff;
   font-size: 16px;
 }
 
-.checkbox-checkbox:checked + .checkbox-button:after {
+.mainCheckbox-checkbox:checked + .mainCheckbox-button:after {
   content: "ON";
   color: #a0e0c0;
 }
 
-.checkbox-checkbox:not(:checked) + .checkbox-button:after {
+.mainCheckbox-checkbox:not(:checked) + .mainCheckbox-button:after {
   content: "OFF";
   color: #e0a0c0;
+}
+
+.enableCheckbox-container {
+  margin: 2px;
+  
+  display: flex;
+}
+
+.enableCheckbox-checkbox {
+  display: none;
+}
+
+.enableCheckbox-button {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  transition: 0.1s;
+}
+
+.enableCheckbox-checkbox:checked + .enableCheckbox-button {
+  background-color: #305040;
+  border: 2px solid #507060;
+}
+
+.enableCheckbox-checkbox:not(:checked) + .enableCheckbox-button {
+  background-color: #503040;
+  border: 2px solid #705060;
 }

@@ -80,8 +80,64 @@ const inputs = {
       label: "Game BGM",
       id: "gamebgm",
       data: {
-        type: "text",
-        placeholder: "Music Name",
+        type: "select",
+        options: [
+          { value: "none", label: "None" },
+          { value: "random", label: "Random" },
+          { value: "RANDOMcalm", label: "Random: Calm" },
+          { value: "RANDOMbattle", label: "Random: Battle" },
+          { value: "aerial city", label: "Aerial City" },
+          { value: "to the limit", label: "To The Limit" },
+          { value: "the great eastern expedition", label: "The Great Eastern Expedition" },
+          { value: "morning sun", label: "Morning Sun" },
+          { value: "in sorrow and pains", label: "In Sorrow And Pains" },
+          { value: "piercing wind", label: "Piercing Wind" },
+          { value: "inorimichite", label: "Inorimichite" },
+          { value: "wind trail", label: "Wind Trail" },
+          { value: "muscat and white dishes", label: "Muscat And White Dishes" },
+          { value: "summer sky and homework", label: "Summer Sky And Homework" },
+          { value: "success story", label: "Success Story" },
+          { value: "classy cat", label: "Classy Cat" },
+          { value: "akindo", label: "Akindo" },
+          { value: "hyper velocity", label: "Hyper Velocity" },
+          { value: "philosophy", label: "Philosophy" },
+          { value: "rainbow of the night", label: "Rainbow Of The Night" },
+          { value: "white calabash", label: "White Calabash" },
+          { value: "smoke", label: "Smoke" },
+          { value: "lover's song", label: "'Lover's Song'" },
+          { value: "step on the scarlet soil", label: "'Step On The Scarlet Soil'" },
+          { value: 'hanging out in tokyo', label:'Hanging Out In Tokyo' },
+          { value:'backwater',label:'Backwater' },
+          { value:'burning heart',label:'Burning Heart' },
+          { value:'storm spirit',label:'Storm Spirit' },
+          { value:'ice eyes',label:'Ice Eyes' },
+          { value:'the time is now',label:'The Time Is Now' },
+          { value:'prism',label:'Prism' },
+          { value:'risky area',label:'Risky Area' },
+          { value:'winter satellite',label:'Winter Satellite' },
+          { value:'first snow',label:'First Snow' },
+          { value:'main street',label:'Main Street' },
+          { value:'over the horizon',label:'Over The Horizon' },
+          { value:'burning spirit, awakening soul',label:'Burning Spirit, Awakening Soul' },
+          { value:'maze of the abyss',label:'Maze Of The Abyss' },
+          { value:'samurai sword',label:'Samurai Sword' },
+          { value:'super machine soul',label:'Super Machine Soul' },
+          { value:'universe 5239',label:'Universe 5239' },
+          { value:'ultra super heroes',label: 'Ultra Super Heroes' },
+          { value: 'twenty-first century people', label: 'Twenty-First Century People' },
+          { value: 'waiting for spring to come', label: 'Waiting For Spring To Come' },
+          { value: 'go go go summer', label: 'Go Go Go Summer' },
+          { value: 'lonely journey', label: 'Lonely Journey' },
+          { value: 'young leaves', label: 'Young Leaves' },
+          { value: 'confession', label: 'Confession' },
+          { value: 'amazing everyday', label: 'Amazing Everyday' },
+          { value: 'asphalt', label: 'Asphalt' },
+          { value: "by the sunlit window", label: "By The Sunlit Window" },
+          { value: "origin", label: "Origin" },
+          { value: "cherry blossom season", label: "Cherry Blossom Season" },
+          { value: "raindrops", label: "Raindrops" },
+          { value: "entrance wreath", label: "Entrance Wreath" },
+        ],
       },
     },
   },
@@ -90,8 +146,12 @@ const inputs = {
       label: "Gamemode",
       id: "match.gamemode",
       data: {
-        type: "text",
-        placeholder: "Gamemode",
+        type: "select",
+        options: [
+          { value: "versus", label: "Versus" },
+          { value: "royale", label: "Royale" },
+          { value: "practice", label: "Practice" },
+        ],
       },
     },
     ft: {
@@ -140,24 +200,55 @@ const inputs = {
       label: "Game Presets",
       id: "options.presets",
       data: {
-        type: "text",
-        placeholder: "Game Presets",
+        type: "select",
+        options: [
+          { value: "default", label: "Default" },
+          { value: "tetra league", label: "Tetra League" },
+          { value: "tetra league (season 1)", label: "Tetra League (Season 1)" },
+          { value: "enforced delays", label: "Enforced Delays" },
+          { value: "4wide", label: "4-wide" },
+          { value: "100 battle royale", label: "100 Battle Royale" },
+          { value: "classic", label: "Classic" },
+          { value: "arcade", label: "Arcade" },
+          { value: "bombs", label: "Bombs" },
+          { value: "quickplay", label: "Quickplay" },
+        ],
       },
     },
     bagtype: {
       label: "Random Bag Type",
       id: "options.bagtype",
       data: {
-        type: "text",
-        placeholder: "Bag Type",
+        type: "select",
+        options: [
+          { value: "7-bag", label: "7-Bag" },
+          { value: "14-bag", label: "14-Bag" },
+          { value: "7+1-bag", label: "7+1-Bag" },
+          { value: "7+2-bag", label: "7+2-Bag" },
+          { value: "7+x-bag", label: "7+x-Bag" },
+          { value: "classic", label: "Classic" },
+          { value: "pairs", label: "Pairs" },
+          { value: "total mayhem", label: "Total Mayhem" },
+        ],
       },
     },
     spinbonuses: {
       label: "Allowed Spins",
       id: "options.spinbonuses",
       data: {
-        type: "text",
-        placeholder: "Allowed Spins",
+        type: "select",
+        options: [
+          { value: "T-spins", label: "T-Spins" },
+          { value: "T-spins+", label: "T-Spins+" },
+          { value: "all+", label: "All+" },
+          { value: "all", label: "All" },
+          { value: "all-mini+", label: "All Mini+" },
+          { value: "all-mini", label: "All Mini" },
+          { value: "mini-only", label: "Mini Only" },
+          { value: "handheld", label: "Handheld" },
+          { value: "stupid", label: "Stupid" },
+          { value: "none", label: "None" },
+        ],
       },
     },
     garbagespecialbonus: {
@@ -171,8 +262,13 @@ const inputs = {
       label: "Combo Table",
       id: "options.combotable",
       data: {
-        type: "text",
-        placeholder: "Combo Table",
+        type: "select",
+        options: [
+          { value: "none", label: "None" },
+          { value: "multiplier", label: "Multiplier" },
+          { value: "classic guideline", label: "Classic Guideline" },
+          { value: "modern guideline", label: "Modern Guideline" },
+        ],
       },
     },
     allow180: {
@@ -186,8 +282,17 @@ const inputs = {
       label: "Kick Table",
       id: "options.kickset",
       data: {
-        type: "text",
-        placeholder: "Kick Table",
+        type: "select",
+        options: [
+          { value: "SRS+", label: "SRS+" },
+          { value: "SRS", label: "SRS" },
+          { value: "SRS-X", label: "SRS-X" },
+          { value: "TETRA-X", label: "TETRA-X" },
+          { value: "NRS", label: "NRS" },
+          { value: "ARS", label: "ARS" },
+          { value: "ASC", label: "ASC" },
+          { value: "none", label: "None" },
+        ],
       },
     },
     usebombs: {
@@ -538,8 +643,12 @@ const inputs = {
       label: "Garbage Target Bonus",
       id: "options.garbagetargetbonus",
       data: {
-        type: "text",
-        placeholder: "Garbage Target Bonus",
+        type: "select",
+        options: [
+          { value: "none", label: "None" },
+          { value: "defensive", label: "Defensive" },
+          { value: "offensive", label: "Offensive" },
+        ],
       },
     },
     openerphase: {
@@ -557,8 +666,12 @@ const inputs = {
       label: "Garbage Entry",
       id: "options.garbageentry",
       data: {
-        type: "text",
-        placeholder: "Garbage Entry",
+        type: "select",
+        options: [
+          { value: "instant", label: "Instant" },
+          { value: "continuous", label: "Continuous" },
+          { value: "delayed", label: "Delayed" },
+        ],
       },
     },
     garbageare: {
@@ -574,7 +687,7 @@ const inputs = {
     },
     garbagearebump: {
       label: "Garbage ARE Hesitation",
-      id: "garbagearebump",
+      id: "options.garbagearebump",
       data: {
         type: "number",
         placeholder: "Garbage ARE Hesitation",
@@ -593,8 +706,12 @@ const inputs = {
       label: "Garbage Blocking",
       id: "options.garbageblocking",
       data: {
-        type: "text",
-        placeholder: "Garbage Blocking",
+        type: "select",
+        options: [
+          { value: "combo blocking", label: "Combo Blocking" },
+          { value: "limited blocking", label: "Limited Blocking" },
+          { value: "none", label: "None" },
+        ],
       },
     },
     manual_allowed: {
@@ -658,23 +775,62 @@ const inputs = {
       label: "Garbage Passthrough",
       id: "options.passthrough",
       data: {
-        type: "text",
-        placeholder: "Garbage Passthrough",
+        type: "select",
+        options: [
+          { value: "zero", label: "Zero" },
+          { value: "limited", label: "Limited" },
+          { value: "consistent", label: "Consistent" },
+          { value: "full", label: "Full" },
+        ],
       },
     },
     roundmode: {
       label: "Rounding Mode",
       id: "options.roundmode",
       data: {
-        type: "text",
-        placeholder: "Rounding Mode",
+        type: "select",
+        options: [
+          { value: "down", label: "Down" },
+          { value: "rng", label: "RNG" },
+        ],
+      },
+    },
+    garbageattackcap: {
+      label: "Garbage Attack Cap",
+      id: "options.garbageattackcap",
+      data: {
+        type: "number",
+        placeholder: "Garbage Attack Cap",
+        min: 0,
+        max: 100000,
+        step: 1,
       },
     },
   },
 };
 
 const configs = {
-  default: "options.presets=default;match.modename=VERSUS;match.gamemode=versus;match.ft=1;match.wb=1;match.gp=0;options.stock=0;options.bagtype=7-bag;options.spinbonuses=all-mini+;options.allow180=1;options.kickset=SRS+;options.allow_harddrop=1;options.display_next=1;options.display_hold=1;options.nextcount=5;options.display_shadow=1;options.are=0;options.lineclear_are=0;options.room_handling=0;options.room_handling_arr=2;options.room_handling_das=10;options.room_handling_sdf=6;options.g=0.02;options.gincrease=0.0025;options.gmargin=3600;options.garbagemultiplier=1;options.garbageblocking=combo blocking;options.garbagemargin=10800;options.garbagecapmargin=0;options.garbageincrease=0.008;options.locktime=30;options.garbagespeed=20;options.garbagecap=8;options.garbagecapincrease=0;options.garbagecapmax=40;options.manual_allowed=0;options.b2bchaining=0;options.combotable=multiplier;options.clutch=1;options.passthrough=zero;options.nolockout=1;options.boardwidth=10;options.boardheight=20;options.allclears=1;options.usebombs=0;options.openerphase=14;options.b2bcharging=1;options.allclear_garbage=5;options.allclear_b2b=1;options.roundmode=down;options.garbagespecialbonus=1;options.messiness_change=1;options.messiness_inner=0;options.messiness_timeout=0;options.garbageabsolutecap=0;options.garbagephase=0;options.garbagetargetbonus=none;options.garbageentry=instant;options.garbageare=5;garbagearebump=12;options.garbagequeue=0;options.messiness_nosame=0;options.infinite_movement=0;options.infinite_hold=0",
+  startup: "options.presets=default;match.modename=VERSUS;match.gamemode=versus;match.ft=1;match.wb=1;match.gp=0;options.stock=0;options.bagtype=7-bag;options.spinbonuses=all-mini+;options.allow180=1;options.kickset=SRS+;options.allow_harddrop=1;options.display_next=1;options.display_hold=1;options.nextcount=5;options.display_shadow=1;options.are=0;options.lineclear_are=0;options.room_handling=0;options.room_handling_arr=2;options.room_handling_das=10;options.room_handling_sdf=6;options.g=0.02;options.gincrease=0.0025;options.gmargin=3600;options.garbagemultiplier=1;options.garbageblocking=combo blocking;options.garbagemargin=10800;options.garbagecapmargin=0;options.garbageincrease=0.008;options.locktime=30;options.garbagespeed=20;options.garbagecap=8;options.garbagecapincrease=0;options.garbagecapmax=40;options.manual_allowed=0;options.b2bchaining=0;options.combotable=multiplier;options.clutch=1;options.passthrough=zero;options.nolockout=1;options.boardwidth=10;options.boardheight=20;options.allclears=1;options.usebombs=0;options.openerphase=14;options.b2bcharging=1;options.allclear_garbage=5;options.allclear_b2b=1;options.roundmode=down;options.garbagespecialbonus=1;options.messiness_change=1;options.messiness_inner=0;options.messiness_timeout=0;options.garbageabsolutecap=0;options.garbagephase=0;options.garbagetargetbonus=none;options.garbageentry=instant;options.garbageare=5;options.garbagearebump=12;options.garbagequeue=0;options.messiness_nosame=0;options.infinite_movement=0;options.infinite_hold=0;name=TETR.IO ROOM;userLimit=0;autoStart=0;public=0;allowAnonymous=1;allowQueued=1;allowUnranked=1;userRankLimit=0;useBestRankAsLimit=0;gamebgm=random;options.garbageattackcap=0",
+  
+  default: "options.presets=default;match.modename=VERSUS;match.gamemode=versus;match.ft=1;match.wb=1;match.gp=0;options.stock=0;options.bagtype=7-bag;options.spinbonuses=all-mini+;options.allow180=1;options.kickset=SRS+;options.allow_harddrop=1;options.display_next=1;options.display_hold=1;options.nextcount=5;options.display_shadow=1;options.are=0;options.lineclear_are=0;options.room_handling=0;options.room_handling_arr=2;options.room_handling_das=10;options.room_handling_sdf=6;options.g=0.02;options.gincrease=0.0025;options.gmargin=3600;options.garbagemultiplier=1;options.garbageblocking=combo blocking;options.garbagemargin=10800;options.garbagecapmargin=0;options.garbageincrease=0.008;options.locktime=30;options.garbagespeed=20;options.garbagecap=8;options.garbagecapincrease=0;options.garbagecapmax=40;options.manual_allowed=0;options.b2bchaining=0;options.combotable=multiplier;options.clutch=1;options.passthrough=zero;options.nolockout=1;options.boardwidth=10;options.boardheight=20;options.allclears=1;options.usebombs=0;options.openerphase=14;options.b2bcharging=1;options.allclear_garbage=5;options.allclear_b2b=1;options.roundmode=down;options.garbagespecialbonus=1;options.messiness_change=1;options.messiness_inner=0;options.messiness_timeout=0;options.garbageabsolutecap=0;options.garbagephase=0;options.garbagetargetbonus=none;options.garbageentry=instant;options.garbageare=5;options.garbagearebump=12;options.garbagequeue=0;options.messiness_nosame=0;options.infinite_movement=0;options.infinite_hold=0;gamebgm=random;options.garbageattackcap=0",
+  
+  "tetra league": "userLimit=2;gamebgm=RANDOMbattle;match.gamemode=versus;match.ft=7;match.wb=1;match.gp=0;options.stock=0;options.presets=TETRA LEAGUE;options.bagtype=7-bag;options.spinbonuses=all-mini+;options.garbagespecialbonus=1;options.combotable=multiplier;options.allow180=1;options.kickset=SRS+;options.usebombs=0;options.allow_harddrop=1;options.display_next=1;options.display_hold=1;options.nextcount=5;options.infinite_movement=0;options.infinite_hold=0;options.display_shadow=1;options.are=0;options.lineclear_are=0;options.room_handling=0;options.room_handling_arr=2;options.room_handling_das=10;options.room_handling_sdf=6;options.nolockout=1;options.boardwidth=10;options.boardheight=20;options.g=0.02;options.gincrease=0.0035;options.gmargin=7200;options.garbagemultiplier=1;options.garbagemargin=10800;options.garbageincrease=0.008;options.messiness_change=1;options.messiness_inner=0;options.messiness_nosame=0;options.messiness_timeout=0;options.locktime=30;options.garbagespeed=20;options.garbagecap=8;options.garbagecapmargin=0;options.garbagecapincrease=0;options.garbagecapmax=40;options.garbageabsolutecap=0;options.garbagephase=0;options.garbagetargetbonus=none;options.openerphase=14;options.garbageentry=instant;options.garbageare=5;options.garbagearebump=12;options.garbagequeue=0;options.garbageblocking=combo blocking;options.manual_allowed=0;options.b2bchaining=0;options.b2bcharging=1;options.allclears=1;options.allclear_garbage=5;options.allclear_b2b=1;options.clutch=1;options.passthrough=zero;options.roundmode=down;options.garbageattackcap=0;match.modename=TETRA LEAGUE",
+  
+  "tetra league (season 1)": "userLimit=2;gamebgm=RANDOMbattle;match.gamemode=versus;match.ft=7;match.wb=1;match.gp=0;options.stock=0;options.presets=TETRA LEAGUE;options.bagtype=7-bag;options.spinbonuses=T-spins;options.garbagespecialbonus=0;options.combotable=multiplier;options.allow180=1;options.kickset=SRS+;options.usebombs=0;options.allow_harddrop=1;options.display_next=1;options.display_hold=1;options.nextcount=5;options.infinite_movement=0;options.infinite_hold=0;options.display_shadow=1;options.are=0;options.lineclear_are=0;options.room_handling=0;options.room_handling_arr=2;options.room_handling_das=10;options.room_handling_sdf=6;options.nolockout=1;options.boardwidth=10;options.boardheight=20;options.g=0.02;options.gincrease=0.0035;options.gmargin=7200;options.garbagemultiplier=1;options.garbagemargin=10800;options.garbageincrease=0.008;options.messiness_change=1;options.messiness_inner=0;options.messiness_nosame=0;options.messiness_timeout=0;options.locktime=30;options.garbagespeed=20;options.garbagecap=8;options.garbagecapmargin=0;options.garbagecapincrease=0;options.garbagecapmax=40;options.garbageabsolutecap=0;options.garbagephase=0;options.garbagetargetbonus=none;options.openerphase=0;options.garbageentry=instant;options.garbageare=5;options.garbagearebump=12;options.garbagequeue=0;options.garbageblocking=combo blocking;options.manual_allowed=0;options.b2bchaining=1;options.b2bcharging=0;options.allclears=1;options.allclear_garbage=10;options.allclear_b2b=0;options.clutch=1;options.passthrough=zero;options.roundmode=down;options.garbageattackcap=0;match.modename=TETRA LEAGUE",
+  
+  classic: "match.gamemode=versus;match.ft=1;match.wb=1;match.gp=0;options.stock=0;options.presets=CLASSIC VERSUS;options.bagtype=classic;options.spinbonuses=none;options.garbagespecialbonus=0;options.combotable=none;options.allow180=0;options.kickset=NRS;options.usebombs=0;options.allow_harddrop=0;options.display_next=1;options.display_hold=0;options.nextcount=1;options.infinite_movement=0;options.infinite_hold=0;options.display_shadow=0;options.are=12;options.lineclear_are=18;options.room_handling=1;options.room_handling_arr=5;options.room_handling_das=16;options.room_handling_sdf=6;options.nolockout=1;options.boardwidth=10;options.boardheight=20;options.g=0.02;options.gincrease=0.0005;options.gmargin=3600;options.garbagemultiplier=1;options.garbagemargin=10800;options.garbageincrease=0;options.messiness_change=0;options.messiness_inner=0;options.messiness_nosame=0;options.messiness_timeout=0;options.locktime=5;options.garbagespeed=20;options.garbagecap=8;options.garbagecapmargin=0;options.garbagecapincrease=0;options.garbagecapmax=40;options.garbageabsolutecap=0;options.garbagephase=0;options.garbagetargetbonus=none;options.openerphase=0;options.garbageentry=instant;options.garbageare=5;options.garbagearebump=12;options.garbagequeue=0;options.garbageblocking=none;options.manual_allowed=0;options.b2bchaining=0;options.b2bcharging=0;options.allclears=0;options.allclear_garbage=10;options.allclear_b2b=0;options.clutch=0;options.passthrough=zero;options.roundmode=down;options.garbageattackcap=0;match.modename=CLASSIC",
+  
+  "enforced delays": "gamebgm=random;match.gamemode=versus;match.ft=2;match.wb=1;match.gp=0;options.stock=0;options.presets=VERSUS;options.bagtype=7-bag;options.spinbonuses=T-spins;options.garbagespecialbonus=0;options.combotable=classic guideline;options.allow180=0;options.kickset=SRS;options.usebombs=0;options.allow_harddrop=1;options.display_next=1;options.display_hold=1;options.nextcount=5;options.infinite_movement=0;options.infinite_hold=0;options.display_shadow=1;options.are=7;options.lineclear_are=35;options.room_handling=1;options.room_handling_arr=2;options.room_handling_das=9;options.room_handling_sdf=10;options.nolockout=1;options.boardwidth=10;options.boardheight=20;options.g=0.02;options.gincrease=0.00125;options.gmargin=3600;options.garbagemultiplier=1;options.garbagemargin=0;options.garbageincrease=0;options.messiness_change=0.25;options.messiness_inner=0.25;options.messiness_nosame=0;options.messiness_timeout=0;options.locktime=30;options.garbagespeed=10;options.garbagecap=100;options.garbagecapmargin=0;options.garbagecapincrease=0;options.garbagecapmax=100;options.garbageabsolutecap=0;options.garbagephase=0;options.garbagetargetbonus=none;options.openerphase=0;options.garbageentry=instant;options.garbageare=5;options.garbagearebump=12;options.garbagequeue=0;options.garbageblocking=limited blocking;options.manual_allowed=0;options.b2bchaining=0;options.b2bcharging=0;options.allclears=1;options.allclear_garbage=10;options.allclear_b2b=0;options.clutch=0;options.passthrough=zero;options.roundmode=down;options.garbageattackcap=0;match.modename=VERSUS",
+  
+  "arcade": "gamebgm=random;match.gamemode=versus;match.ft=1;match.wb=1;match.gp=0;options.stock=0;options.presets=ARCADE VERSUS;options.bagtype=7-bag;options.spinbonuses=T-spins;options.garbagespecialbonus=0;options.combotable=multiplier;options.allow180=0;options.kickset=ARS;options.usebombs=0;options.allow_harddrop=1;options.display_next=1;options.display_hold=1;options.nextcount=3;options.infinite_movement=0;options.infinite_hold=0;options.display_shadow=0;options.are=27;options.lineclear_are=25;options.room_handling=1;options.room_handling_arr=1;options.room_handling_das=10;options.room_handling_sdf=20;options.nolockout=1;options.boardwidth=10;options.boardheight=20;options.g=0.02;options.gincrease=0.0025;options.gmargin=3600;options.garbagemultiplier=1;options.garbagemargin=10800;options.garbageincrease=0.008;options.messiness_change=1;options.messiness_inner=0;options.messiness_nosame=0;options.messiness_timeout=0;options.locktime=18;options.garbagespeed=20;options.garbagecap=8;options.garbagecapmargin=0;options.garbagecapincrease=0;options.garbagecapmax=40;options.garbageabsolutecap=0;options.garbagephase=0;options.garbagetargetbonus=none;options.openerphase=0;options.garbageentry=instant;options.garbageare=5;options.garbagearebump=12;options.garbagequeue=0;options.garbageblocking=combo blocking;options.manual_allowed=0;options.b2bchaining=0;options.b2bcharging=0;options.allclears=1;options.allclear_garbage=10;options.allclear_b2b=0;options.clutch=1;options.passthrough=zero;options.roundmode=down;options.garbageattackcap=0;match.modename=ARCADE VERSUS",
+  
+  "quickplay": "gamebgm=random;match.gamemode=versus;match.ft=1;match.wb=1;match.gp=0;options.stock=0;options.presets=VERSUS;options.bagtype=7-bag;options.spinbonuses=T-spins;options.garbagespecialbonus=0;options.combotable=multiplier;options.allow180=1;options.kickset=SRS+;options.usebombs=0;options.allow_harddrop=1;options.display_next=1;options.display_hold=1;options.nextcount=5;options.infinite_movement=0;options.infinite_hold=0;options.display_shadow=1;options.are=0;options.lineclear_are=0;options.room_handling=0;options.room_handling_arr=2;options.room_handling_das=10;options.room_handling_sdf=6;options.nolockout=1;options.boardwidth=10;options.boardheight=20;options.g=0.05;options.gincrease=0.0025;options.gmargin=0;options.garbagemultiplier=1;options.garbagemargin=10800;options.garbageincrease=0.008;options.messiness_change=1;options.messiness_inner=0;options.messiness_nosame=0;options.messiness_timeout=0;options.locktime=30;options.garbagespeed=20;options.garbagecap=4;options.garbagecapmargin=0;options.garbagecapincrease=0.033;options.garbagecapmax=10;options.garbageabsolutecap=0;options.garbagephase=0;options.garbagetargetbonus=none;options.openerphase=0;options.garbageentry=instant;options.garbageare=5;options.garbagearebump=12;options.garbagequeue=0;options.garbageblocking=combo blocking;options.manual_allowed=0;options.b2bchaining=1;options.b2bcharging=0;options.allclears=1;options.allclear_garbage=10;options.allclear_b2b=0;options.clutch=1;options.passthrough=zero;options.roundmode=down;options.garbageattackcap=0;match.modename=VERSUS",
+  
+  "4wide": "gamebgm=random;match.gamemode=versus;match.ft=1;match.wb=1;match.gp=0;options.stock=0;options.presets=4-WIDE;options.bagtype=7-bag;options.spinbonuses=handheld;options.garbagespecialbonus=0;options.combotable=multiplier;options.allow180=1;options.kickset=SRS-X;options.usebombs=0;options.allow_harddrop=1;options.display_next=1;options.display_hold=1;options.nextcount=5;options.infinite_movement=0;options.infinite_hold=0;options.display_shadow=1;options.are=0;options.lineclear_are=0;options.room_handling=0;options.room_handling_arr=2;options.room_handling_das=10;options.room_handling_sdf=6;options.nolockout=1;options.boardwidth=4;options.boardheight=26;options.g=0.02;options.gincrease=0.0025;options.gmargin=3600;options.garbagemultiplier=1;options.garbagemargin=10800;options.garbageincrease=0.008;options.messiness_change=1;options.messiness_inner=0;options.messiness_nosame=0;options.messiness_timeout=0;options.locktime=30;options.garbagespeed=20;options.garbagecap=4;options.garbagecapmargin=0;options.garbagecapincrease=0.02;options.garbagecapmax=8;options.garbageabsolutecap=0;options.garbagephase=0;options.garbagetargetbonus=none;options.openerphase=0;options.garbageentry=instant;options.garbageare=5;options.garbagearebump=12;options.garbagequeue=0;options.garbageblocking=combo blocking;options.manual_allowed=0;options.b2bchaining=0;options.b2bcharging=0;options.allclears=1;options.allclear_garbage=5;options.allclear_b2b=1;options.clutch=1;options.passthrough=zero;options.roundmode=down;options.garbageattackcap=0;match.modename=4-WIDE",
+  
+  "100 battle royale": "userLimit=100;gamebgm=random;match.gamemode=royale;match.ft=1;match.wb=1;match.gp=0;options.stock=0;options.presets=BATTLE ROYALE;options.bagtype=7-bag;options.spinbonuses=all-mini+;options.garbagespecialbonus=1;options.combotable=classic guideline;options.allow180=0;options.kickset=SRS;options.usebombs=0;options.allow_harddrop=1;options.display_next=1;options.display_hold=1;options.nextcount=6;options.infinite_movement=0;options.infinite_hold=0;options.display_shadow=1;options.are=6;options.lineclear_are=25;options.room_handling=1;options.room_handling_arr=2;options.room_handling_das=12;options.room_handling_sdf=6;options.nolockout=1;options.boardwidth=10;options.boardheight=20;options.g=0.02;options.gincrease=0.003;options.gmargin=3600;options.garbagemultiplier=1;options.garbagemargin=10800;options.garbageincrease=0.008;options.messiness_change=0.25;options.messiness_inner=0.25;options.messiness_nosame=0;options.messiness_timeout=0;options.locktime=30;options.garbagespeed=20;options.garbagecap=100;options.garbagecapmargin=0;options.garbagecapincrease=0.033;options.garbagecapmax=100;options.garbageabsolutecap=12;options.garbagephase=0;options.garbagetargetbonus=defensive;options.openerphase=14;options.garbageentry=delayed;options.garbageare=7;options.garbagearebump=12;options.garbagequeue=1;options.garbageblocking=combo blocking;options.manual_allowed=1;options.b2bchaining=0;options.b2bcharging=1;options.allclears=1;options.allclear_garbage=5;options.allclear_b2b=1;options.clutch=0;options.passthrough=zero;options.roundmode=down;options.garbageattackcap=20;match.modename=BATTLE ROYALE",
+  
+  "bombs": "gamebgm=random;match.gamemode=versus;match.ft=1;match.wb=1;match.gp=0;options.stock=0;options.presets=VERSUS;options.bagtype=7+2-bag;options.spinbonuses=all-mini+;options.garbagespecialbonus=0;options.combotable=multiplier;options.allow180=1;options.kickset=SRS+;options.usebombs=1;options.allow_harddrop=1;options.display_next=1;options.display_hold=1;options.nextcount=5;options.infinite_movement=0;options.infinite_hold=0;options.display_shadow=1;options.are=0;options.lineclear_are=0;options.room_handling=0;options.room_handling_arr=2;options.room_handling_das=10;options.room_handling_sdf=6;options.nolockout=1;options.boardwidth=10;options.boardheight=20;options.g=0.02;options.gincrease=0.0025;options.gmargin=3600;options.garbagemultiplier=0.8;options.garbagemargin=0;options.garbageincrease=0.005;options.messiness_change=1;options.messiness_inner=0.3;options.messiness_nosame=0;options.messiness_timeout=0;options.locktime=30;options.garbagespeed=20;options.garbagecap=8;options.garbagecapmargin=0;options.garbagecapincrease=0;options.garbagecapmax=40;options.garbageabsolutecap=0;options.garbagephase=0;options.garbagetargetbonus=none;options.openerphase=14;options.garbageentry=instant;options.garbageare=5;options.garbagearebump=12;options.garbagequeue=0;options.garbageblocking=combo blocking;options.manual_allowed=0;options.b2bchaining=0;options.b2bcharging=0;options.allclears=1;options.allclear_garbage=3;options.allclear_b2b=0;options.clutch=1;options.passthrough=zero;options.roundmode=down;options.garbageattackcap=0;match.modename=VERSUS",
 };
 
 export { inputs, configs };

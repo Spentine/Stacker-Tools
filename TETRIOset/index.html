@@ -5,36 +5,80 @@
     <script src="script.js" type="module"></script>
   </head>
   <body>
-    <div class="horizontal-container">
-      <h1> TETR.IO <span class="mono">/set</span> GENERATOR </h1>
-    </div>
-    <div class="setting-container">
-      <div class="vertical-container">
-        <h2> Room </h2>
-        <hr>
-        <div id="settingRoomCategory"></div>
+    <div class="full-container">
+      <div class="horizontal-container">
+        <h1> TETR.IO <span class="mono">/set</span> GENERATOR </h1>
+        <h3> Created by Spentine </h3>
       </div>
-      <div class="vertical-container">
-        <h2> Match </h2>
-        <hr>
-        <div id="settingMatchCategory"></div>
+      <div class="setting-container">
+        <div class="vertical-container">
+          <h2> Import </h2>
+          <hr>
+          <div class="setting-pair">
+            <label for="importText"> Import Text </label>
+            <input type="text" class="setting-input mono" id="importText" placeholder="/set ..."/>
+            <button class="setting-button" id="importButton"> Import </button>
+          </div>
+        </div>
+        <div class="vertical-container">
+          <h2> Export </h2>
+          <hr>
+          <div class="setting-pair centered-container">
+            <label for="export-text"> Export Text </label>
+            <button class="setting-button" id="exportButton"> Export </button>
+          </div>
+          <p class="mono output-code" id="outputCode"></p>
+          <div class="centered-container">
+            <button class="setting-button" id="copyButton"> Copy </button>
+            <button class="setting-button" id="clearButton"> Clear </button>
+          </div>
+        </div>
+        <div class="vertical-container">
+          <h2> Manage Settings </h2>
+          <hr>
+          <div class="setting-pair centered-container">
+            <button class="setting-button" id="selectAllButton"> Select All </button> 
+            <button class="setting-button" id="selectAllExceptRoomButton"> Select All Except Room </button>
+            <button class="setting-button" id="deselectAllButton"> Deselect All </button>
+          </div>
+          <div class="setting-pair">
+            <label for="selectOnChange"> Select on Change </label>
+            <div class="mainCheckbox-container">
+              <input type="checkbox" id="selectOnChange" class="mainCheckbox-checkbox" checked/>
+              <label for="selectOnChange" class="mainCheckbox-button"></label>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="setting-container">
-      <div class="vertical-container">
-        <h2> Game </h2>
-        <hr>
-        <div id="settingGameCategory"></div>
+      <hr>
+      <div class="setting-container">
+        <div class="vertical-container">
+          <h2> Room </h2>
+          <hr>
+          <div id="settingRoomCategory"></div>
+        </div>
+        <div class="vertical-container">
+          <h2> Match </h2>
+          <hr>
+          <div id="settingMatchCategory"></div>
+        </div>
       </div>
-      <div class="vertical-container">
-        <h2> Movement </h2>
-        <hr>
-        <div id="settingMovementCategory"></div>
-      </div>
-      <div class="vertical-container">
-        <h2> Gravity & Margin Time </h2>
-        <hr>
-        <div id="settingGravityCategory"></div>
+      <div class="setting-container">
+        <div class="vertical-container">
+          <h2> Game </h2>
+          <hr>
+          <div id="settingGameCategory"></div>
+        </div>
+        <div class="vertical-container">
+          <h2> Movement </h2>
+          <hr>
+          <div id="settingMovementCategory"></div>
+        </div>
+        <div class="vertical-container">
+          <h2> Gravity & Margin Time </h2>
+          <hr>
+          <div id="settingGravityCategory"></div>
+        </div>
       </div>
     </div>
   </body>

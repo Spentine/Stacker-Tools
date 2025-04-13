@@ -22,7 +22,8 @@ For boolean values, both integers (0, 1) and boolean strings ("false", "true") w
   - $x \in \mathbb{Z}$ (`step=1`)
 - boolean `useBestRankAsLimit`: limit by top rank
 - string `gamebgm`: music
-  - use song name for music
+  - song names listed in [Music](#music)
+  - you can also type in any string
 
 ## Match
 
@@ -148,7 +149,7 @@ For boolean values, both integers (0, 1) and boolean strings ("false", "true") w
 - number `options.garbageare`: garbage ARE
   - $1 \le x \le 300$
   - $x \equiv 0 \mod 1$ (`step=1`)
-- number `garbagearebump`: garbage ARE hesitation
+- number `options.garbagearebump`: garbage ARE hesitation
   - $0 \le x \le 300$
 - boolean `options.garbagequeue`: garbage queue
 - string `options.garbageblocking`: garbage blocking
@@ -168,6 +169,11 @@ For boolean values, both integers (0, 1) and boolean strings ("false", "true") w
   - valid strings listed in [Garbage Passthrough](#garbage-passthrough)
 - string `options.roundmode`: rounding mode
   - valid strings listed in [Rounding Mode](#rounding-mode)
+
+### Hidden?
+- number `options.garbageattackcap`: garbage attack cap
+  - $0 \le 100000$
+  - $x \in \mathbb{Z}$ (`step=1`)
 
 # Preset Values
 
@@ -250,3 +256,60 @@ For boolean values, both integers (0, 1) and boolean strings ("false", "true") w
 ### Rounding Mode
 - `down`
 - `rng`
+
+### Music
+- `none`
+- `random`
+- `RANDOMcalm`
+- `RANDOMbattle`
+- `aerial city`
+- `to the limit`
+- `the great eastern expedition`
+- `morning sun`
+- `in sorrow and pains`
+- `piercing wind`
+- `inorimichite`
+- `wind trail`
+- `muscat and white dishes`
+- `summer sky and homework`
+- `success story`
+- `classy cat`
+- `akindo`
+- `hyper velocity`
+- `philosophy`
+- `rainbow of the night`
+- `white calabash`
+- `smoke`
+- `lover's song`
+- `step on the scarlet soil`
+- `hanging out in tokyo`
+- `backwater`
+- `burning heart`
+- `storm spirit`
+- `ice eyes`
+- `the time is now`
+- `prism`
+- `risky area`
+- `winter satellite`
+- `first snow`
+- `main street`
+- `over the horizon`
+- `burning spirit, awakening soul`
+- `maze of the abyss`
+- `samurai sword`
+- `super machine soul`
+- `universe 5239`
+- `ultra super heroes`
+- `twenty-first century people`
+- `waiting for spring to come`
+- `go go go summer`
+- `lonely journey`
+- `young leaves`
+- `confession`
+- `amazing everyday`
+- `asphalt`
+- `by the sunlit window`
+- `origin`
+- `cherry blossom season`
+- `raindrops`
+- `entrance wreath`
