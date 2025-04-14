@@ -10,24 +10,29 @@
         <h1> TETR.IO <span class="mono">/set</span> GENERATOR </h1>
         <h3> Created by Spentine </h3>
       </div>
+      <div class="horizontal-container">
+        <h2> About </h2>
+        <hr>
+        <p>
+          &emsp; This is a tool to generate TETR.IO /set commands. Because TETR.IO doesn't provide an easy way to copy room settings, this tool was created to help players easily copy and share their settings.
+        </p>
+      </div>
       <div class="setting-container">
         <div class="vertical-container">
-          <h2> Import </h2>
+          <h2> Import & Export </h2>
           <hr>
           <div class="setting-pair">
             <label for="importText"> Import Text </label>
             <input type="text" class="setting-input mono" id="importText" placeholder="/set ..."/>
             <button class="setting-button" id="importButton"> Import </button>
           </div>
-        </div>
-        <div class="vertical-container">
-          <h2> Export </h2>
-          <hr>
+          <br>
           <div class="setting-pair centered-container">
             <label for="export-text"> Export Text </label>
             <button class="setting-button" id="exportButton"> Export </button>
           </div>
           <p class="mono output-code" id="outputCode"></p>
+          <p id="outputInfo"></p>
           <div class="centered-container">
             <button class="setting-button" id="copyButton"> Copy </button>
             <button class="setting-button" id="clearButton"> Clear </button>

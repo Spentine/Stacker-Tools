@@ -21,6 +21,8 @@ function main() {
   const copyButton = document.getElementById("copyButton");
   const clearButton = document.getElementById("clearButton");
   
+  const outputInfo = document.getElementById("outputInfo");
+  
   const createInput = (data) => {
     data ??= {};
     
@@ -180,7 +182,7 @@ function main() {
         continue;
       }
       
-      value = value.replace("%SEMI%", ";").replace("%EQUALS%", "=").trim();
+      value = value.replaceAll("%SEMI%", ";").replaceAll("%EQUALS%", "=").trim();
       
       if (elements.type === "checkbox") {
         result.push({
@@ -224,8 +226,6 @@ function main() {
   };
   
   const exportSettingCode = (elementsList) => {
-    const commands = [];
-    
     // filter elements for enabled checkboxes
     const filteredElements = {};
     const keys = Object.keys(elementsList);
@@ -237,25 +237,121 @@ function main() {
       }
     }
     
-    // create commands
+    // determine if any configs are compatible
+    const compatibleConfigs = {};
+    const configKeys = Object.keys(configs);
+    const codeBitmap = generateBitmap(filteredElements, ids);
+    console.log(codeBitmap);
+    for (const key of configKeys) {
+      compatibleConfigs[key] = determineConfigCompatibility(
+        bitmaps[key], codeBitmap
+      );
+    }
+    compatibleConfigs.startup = false; // technically not compatible
+    console.log(compatibleConfigs);
+    
+    // get all values
+    const commands = [];
     const filteredKeys = Object.keys(filteredElements);
     for (const id of filteredKeys) {
       const element = filteredElements[id];
       const type = element.type;
+      
       const value = (type === "checkbox")
         ? element.valueElement.checked
         : element.valueElement.value;
       
-      if (type === "checkbox") {
-        commands.push(`${id}=${value ? "1" : "0"}`);
-      } else {
-        // escape semicolon and equals sign
-        const escapedValue = value.replaceAll(";", "%SEMI%").replaceAll("=", "%EQUALS%");
-        commands.push(`${id}=${escapedValue}`);
-      }
+      commands.push({
+        id, value
+      });
     }
     
-    return "/set " + commands.join(";");
+    // function to convert commands to array of strings
+    const convertToArrayStrings = function (commands) {
+      const commandStrings = [];
+      for (const command of commands) {
+        const id = command.id;
+        const value = command.value;
+        if (typeof value === "boolean") {
+          commandStrings.push(`${id}=${value ? "1" : "0"}`);
+        } else {
+          commandStrings.push(`${id}=${value
+            .replaceAll(";", "%SEMI%")
+            .replaceAll("=", "%EQUALS%")
+          }`);
+        }
+      }
+      return commandStrings;
+    }
+    
+    // create list of all possible command strings
+    const alternates = [];
+    alternates.push(convertToArrayStrings(commands));
+    
+    for (const config of Object.keys(compatibleConfigs)) {
+      if (!compatibleConfigs[config]) continue;
+      // filter for differing values
+      const configData = parsed[config];
+      const configSet = new Set(configData.map((c) => c.id));
+      const differingCommands = commands.filter((command) => {
+        if (!configSet.has(command.id)) return true;
+        const configCommand = configData.find((c) => c.id === command.id);
+        if (configCommand.value !== command.value) {
+          return true;
+        }
+        return false;
+      });
+      // console.log(differingCommands);
+      differingCommands.splice(0, 0, {
+        id: "options.presets",
+        value: config,
+      });
+      alternates.push(convertToArrayStrings(differingCommands));
+    }
+    
+    const convertToString = (commands) => {
+      return commands.join(";");
+    }
+    
+    // choose the shortest one
+    const stringifiedCommands = alternates.map((commands) => {
+      return convertToString(commands);
+    });
+    let shortestIndex = -1;
+    let shortestLength = Infinity;
+    for (let i = 0; i < stringifiedCommands.length; i++) {
+      const length = stringifiedCommands[i].length;
+      if (length < shortestLength) {
+        shortestLength = length;
+        shortestIndex = i;
+      }
+    }
+    const shortestString = "/set " + stringifiedCommands[shortestIndex];
+    
+    if (shortestLength === 0) {
+      return "";
+    } else if (shortestLength > 512) {
+      // split into multiple /set commands
+      const consecutiveCommands = [];
+      const commands = alternates[shortestIndex];
+      console.log(commands);
+      
+      let currentString = "/set ";
+      for (let i=0; i<commands.length; i++) {
+        const command = commands[i];
+        if ((currentString.length + command.length) > 512) {
+          consecutiveCommands.push(currentString.substring(0, currentString.length - 1));
+          currentString = "/set ";
+        } else {
+          currentString += command + ";";
+        }
+      }
+      consecutiveCommands.push(currentString.substring(0, currentString.length - 1));
+      
+      return consecutiveCommands.join("\n");
+    }
+    
+    return shortestString;
   };
   
   const importSettingCode = (code, elementsList, presetsEnabled) => {
@@ -273,6 +369,40 @@ function main() {
     }
   };
   
+  const generateBitmap = (code, ids) => {
+    const allCodeIds = ((Array.isArray(code))
+      ? new Set(code.map((c) => c.id))
+      : new Set(Object.keys(code))
+    );
+    // add options.presets to the bitmap to ignore it
+    allCodeIds.add("options.presets");
+    let bitmap = 0n;
+    for (const option of ids) {
+      bitmap <<= 1n;
+      if (allCodeIds.has(option)) {
+        bitmap |= 1n;
+      }
+    }
+    return bitmap;
+  };
+  
+  const determineConfigCompatibility = (configBitmap, codeBitmap) => {
+    // for each 1 in the configBitmap, check if the codeBitmap has a 1 in the same position
+    /*
+      config, code | result
+      1 1 | 0
+      1 0 | 1
+      0 1 | 0
+      0 0 | 0
+    */
+    const allSet = 0x3ffffffffffffffffffn; // all bits set to 1
+    // consider also using bitmaps.startup
+    const notCodeBitmap = allSet - codeBitmap;
+    const result = configBitmap & notCodeBitmap;
+    console.log(result);
+    return result === 0n; // if all bits are 0, then the config is compatible
+  };
+  
   const allExceptRoom = {
     ...addToCategory(settingMatchCategory, inputs.settingMatchCategory),
     ...addToCategory(settingGameCategory, inputs.settingGameCategory),
@@ -287,23 +417,55 @@ function main() {
     ...allExceptRoom,
   };
   
+  const ids = Object.keys(allElements);
+  
   console.log(allElements);
   
   processSettingCode(configs.startup, allElements, false);
   
-  const ids = Object.keys(allElements);
-  for (const id of ids) {
-    const element = allElements[id];
-    element.valueElement.addEventListener("change", (e) => {
-      if (selectOnChange.checked) {
-        element.enableCheckbox.checked = true;
-      }
-    });
+  const parsed = {};
+  const bitmaps = {};
+  
+  {
+    const configKeys = Object.keys(configs);
+    for (const key of configKeys) {
+      const config = configs[key];
+      const parsedConfig = parseSettingCode(config, allElements, false);
+      parsed[key] = parsedConfig;
+    }
+    
+    for (const key of configKeys) {
+      const parsedConfig = parsed[key];
+      const bitmap = generateBitmap(parsedConfig, ids);
+      bitmaps[key] = bitmap;
+    }
+  }
+  
+  console.log(parsed);
+  console.log(bitmaps);
+  
+  {
+    for (const id of ids) {
+      const element = allElements[id];
+      element.valueElement.addEventListener("change", (e) => {
+        if (selectOnChange.checked) {
+          element.enableCheckbox.checked = true;
+        }
+      });
+    }
   }
   
   exportButton.addEventListener("click", () => {
     const code = exportSettingCode(allElements);
     outputCode.textContent = code;
+    
+    const multipleCommands = code.includes("\n");
+    if (multipleCommands) {
+      outputCode.innerHTML = outputCode.innerHTML.replaceAll("\n", "<br><br>");
+      outputInfo.innerHTML = `Code Length: ${code.length} characters<br><br>This command contains multiple /set commands. Copy and paste them one by one.`;
+    } else {
+      outputInfo.innerHTML = `Code Length: ${code.length} characters`;
+    }
   });
   
   importButton.addEventListener("click", () => {
@@ -317,7 +479,6 @@ function main() {
   });
   
   selectAllButton.addEventListener("click", () => {
-    const ids = Object.keys(allElements);
     for (const id of ids) {
       const element = allElements[id];
       element.enableCheckbox.checked = true;
@@ -325,7 +486,6 @@ function main() {
   });
   
   deselectAllButton.addEventListener("click", () => {
-    const ids = Object.keys(allElements);
     for (const id of ids) {
       const element = allElements[id];
       element.enableCheckbox.checked = false;
@@ -349,7 +509,12 @@ function main() {
   copyButton.addEventListener("click", () => {
     const code = outputCode.textContent;
     navigator.clipboard.writeText(code).then(() => {
-      alert("Copied to clipboard!");
+      copyButton.textContent = "Copied!";
+      
+      // wait 2 seconds and change back to "Copy"
+      setTimeout(() => {
+        copyButton.textContent = "Copy";
+      }, 2000);
     }).catch((err) => {
       console.error("Failed to copy: ", err);
     });
