@@ -3,8 +3,10 @@
 @media (prefers-color-scheme: light) {
   :root {
     --background-color: #d0d0f0;
-    --input-color: #c0c0f0;
+    --container-background-color: #b0b0c8;
+    --input-color: #c0c0e0;
     --button-hover-color: #a0a0c0;
+    --output-color: #9090a0;
     --text-color: #000000;
     --border-color: #00000040;
     
@@ -15,8 +17,10 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background-color: #202030;
+    --container-background-color: #181820;
     --input-color: #303040;
     --button-hover-color: #404050;
+    --output-color: #101018;
     --text-color: #ffffff;
     --border-color: #ffffff40;
     
@@ -73,7 +77,7 @@ button:hover {
 pre {
   font-weight: var(--text-weight);
   font-family: inherit;
-  background-color: #00000040;
+  background-color: var(--output-color);
   
   margin: 0;
   padding: 8px;
@@ -93,8 +97,8 @@ hr {
   max-width: 600px;
   margin: 20px auto;
   padding: 20px;
-  
-  background-color: #00000040;
+
+  background-color: var(--container-background-color);
 }
 
 .flex {

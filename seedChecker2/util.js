@@ -5,20 +5,30 @@ const pieces = ["Z", "L", "O", "S", "I", "J", "T"];
  * @param {string} queue - The input queue string.
  * @returns {string} - The formatted queue string.
  */
-function formatQueue(queue) {
-  queue = queue.toUpperCase();
-  
+function formatQueue(queue, type="7bag") {
   let formatted = "";
-  let i = 0;
+  
+  // convert to uppercase and filter out invalid characters
+  queue = queue.toUpperCase();
+  let pieceQueue = "";
   for (const char of queue) {
     if (pieces.includes(char)) {
-      if (i !== 0 && i % 7 === 0) {
-        formatted += " "; // add space every 7 characters
-      }
-      formatted += char;
-      i++;
+      pieceQueue += char;
     }
   }
+  
+  if (type === "7bag") {
+    // add space every 7 characters
+    for (let i = 0; i < pieceQueue.length; i++) {
+      if (i !== 0 && i % 7 === 0) {
+        formatted += " ";
+      }
+      formatted += pieceQueue[i];
+    }
+  } else if (type === "totalMayhem") {
+    formatted = pieceQueue;
+  }
+  
   return formatted;
 }
 
