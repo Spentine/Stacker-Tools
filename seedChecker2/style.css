@@ -1,19 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@200..900&display=swap');
+
 @media (prefers-color-scheme: light) {
   :root {
     --background-color: #d0d0f0;
+    --input-color: #c0c0f0;
+    --button-hover-color: #a0a0c0;
     --text-color: #000000;
+    --border-color: #00000040;
+    
+    --text-weight: 500;
   }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background-color: #202030;
+    --input-color: #303040;
+    --button-hover-color: #404050;
     --text-color: #ffffff;
+    --border-color: #ffffff40;
+    
+    --text-weight: 400;
   }
 }
 
 body {
   background-color: var(--background-color);
   color: var(--text-color);
-  font-family: Arial, sans-serif;
+  font-family: "Reddit Mono", monospace;
+  
+  padding: 0;
+  margin: 0;
+}
+
+h1 {
+  font-weight: var(--text-weight);
+  text-align: center;
+  
+  margin: 0 0 16px 0;
+}
+
+h2 {
+  font-weight: var(--text-weight);
+  text-align: center;
+  
+  margin: 0 0 16px 0;
+}
+
+p, label {
+  font-weight: var(--text-weight);
+  
+  margin: 0;
+}
+
+input, button, select {
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: var(--text-weight);
+  background-color: var(--input-color);
+  
+  border: 2px solid var(--border-color);
+  
+  margin: 0;
+  padding: 8px;
+}
+
+button:hover {
+  background-color: var(--button-hover-color);
+}
+
+pre {
+  font-weight: var(--text-weight);
+  font-family: inherit;
+  background-color: #00000040;
+  
+  margin: 0;
+  padding: 8px;
+}
+
+hr {
+  border: 1px solid var(--border-color);
+  
+  margin: 16px 0;
+}
+
+.paragraph-content {
+  text-align: justify;
+}
+
+.container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  
+  background-color: #00000040;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.stretch-end {
+  flex: 1;
+  margin-left: 8px;
 }

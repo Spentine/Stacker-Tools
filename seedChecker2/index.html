@@ -8,9 +8,38 @@
     <script src="script.js" type="module"></script>
   </head>
   <body>
+    
     <div class="container">
       <h1> Seed Checker V2 </h1>
-      <p> Insert more info here later. </p>
+      <p class="paragraph-content">
+        The successor to <i>Seed Checker V1</i>. This new program uses more advanced algorithms to quickly brute force game seeds. Rather than shuffling queues, it instead only operates on numbers and more efficiently compares it to caching lists. To further multiply the speed, multithreading is implemented to make use of all logical processors on the machine, allowing for faster and more efficient seed checking online.
+      </p>
     </div>
+    
+    <div class="container">
+      <h2> Configuration </h2>
+      <p class="paragraph-content">
+        Customize what the program will be searching for. The piece sequence, randomizer, and other settings can be adjusted to suit your needs.
+      </p>
+      <hr>
+      <div class="flex">
+        <label for="piece-sequence">Piece Sequence:</label>
+        <input class="stretch-end" type="text" id="piece-sequence" placeholder="Enter piece sequence here">
+      </div>
+      <hr>
+      <div class="flex">
+        <button id="start-button">Start</button>
+      </div>
+    </div>
+    
+    <div class="container">
+      <h2> Output </h2>
+      <p class="paragraph-content">
+        The results of the seed checking will be displayed here. You can view more information about it by switching the configuration of the program.
+      </p>
+      <hr>
+      <pre id="output"></pre>
+    </div>
+    
   </body>
 </html>
