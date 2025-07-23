@@ -1,3 +1,6 @@
+import { lcg } from './lcg.js';
+import { shuffle, shuffleNum } from './fy.js';
+
 function main() {
   console.log("Script loaded.");
 }
