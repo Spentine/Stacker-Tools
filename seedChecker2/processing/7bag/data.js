@@ -3,7 +3,8 @@ import {
   convertNums,
   bag2num,
   bagTrie,
-  getBagCompletions
+  getBagCompletions,
+  validateBagPossibility
 } from "./fy.js";
 
 /**
@@ -59,6 +60,8 @@ function bagData(bag) {
 
 function generateQueueData(string) {
   const bags = splitIntoBags(string);
+  const valid = validateBagPossibility(bags);
+  if (!valid) return false;
   const data = {
     bags: bags,
     nums: [],

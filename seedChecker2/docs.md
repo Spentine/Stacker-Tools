@@ -20,10 +20,6 @@ The array shuffler, a *Fisher-Yates* shuffle, depends on **6** random numbers to
 
 Incomplete bags, however, will have many different numbers that are valid. To also skip the overhead of shuffling incomplete bags, a preprocessed dictionary of queues should be generated, and all the valid number sequences should be collected into a set.
 
-### Single Seed Processing
-
-The random number generator, a *Linear Congruential Generator*, can be reduced to simply choosing an index in a long, repeating list of numbers. Each seed is simply associated 
-
 ### Important Numbers
 
 -6: 1483866096 (jump backward one bag)

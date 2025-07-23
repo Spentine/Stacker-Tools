@@ -1,4 +1,4 @@
-import { lcg, toFloat } from "./lcg.js";
+import { lcg, toFloat } from "../lcg.js";
 
 // fisher-yates shuffle
 
@@ -18,6 +18,25 @@ const shuffle = (array, seed) => {
   }
   return seed;
 };
+
+/**
+ * generates the next n bags from a given seed
+ * @param {number} n - The number of bags to generate.
+ * @param {number} seed - The seed for the random number generator.
+ * @returns {Object} - An object containing the generated bags and the updated seed.
+ **/
+function generateBags(n, seed) {
+  const bags = [];
+  for (let i = 0; i < n; i++) {
+    const bag = [...pieces];
+    seed = shuffle(bag, seed);
+    bags.push(bag);
+  }
+  return {
+    bags: bags,
+    seed: seed,
+  };
+}
 
 /**
  * generates the numbers that are used for the shuffle
@@ -113,6 +132,10 @@ const generateBag2Num = () => {
 
 const bag2num = generateBag2Num();
 
+/**
+ * generates a trie from the bag2num object
+ * @param {Object} bag2num - The object mapping piece queues to their numeric representations
+ */
 const generateBagTrie = (bag2num) => {
   const trie = {};
   for (const bag in bag2num) {
@@ -129,6 +152,12 @@ const generateBagTrie = (bag2num) => {
   return trie;
 };
 
+/**
+ * retrieves all possible completions for a given bag from the trie
+ * @param {string} bag - The bag string to find completions for.
+ * @param {Object} trie - The trie structure containing bag mappings.
+ * @returns {Array} - An array of completions for the given bag.
+ */
 const getBagCompletions = (bag, trie) => {
   const completions = [];
 
@@ -153,8 +182,23 @@ const getBagCompletions = (bag, trie) => {
 
 const bagTrie = generateBagTrie(bag2num);
 
+/**
+ * check if bags are possible from a queue
+ * @param {Array} bags - The array of bags to check.
+ * @returns {boolean} - Returns true if all bags are valid, otherwise false.
+ */
+function validateBagPossibility(bags) {
+  // for each bag, check if all pieces are unique
+  for (const bag of bags) {
+    const piecesSet = new Set(bag);
+    if (piecesSet.size !== bag.length) return false;
+  }
+  return true;
+}
+
 export {
   pieces,
+  generateBags,
   shuffle,
   shuffleNum,
   shuffleCompare,
@@ -162,5 +206,6 @@ export {
   shuffleFromNums,
   bag2num,
   bagTrie,
-  getBagCompletions
+  getBagCompletions,
+  validateBagPossibility
 };
