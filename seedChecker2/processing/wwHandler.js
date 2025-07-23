@@ -22,6 +22,7 @@ function findOne(workers, data) {
     const remainder = 2147483646 % workers.length;
     let j = workers.length - remainder; // number of workers that will not get an extra job
     let index = 1; // start from 1, since 0 is not a valid seed
+    let rejected = 0; // number of workers that have rejected the seed
     for (let i = 0; i < workers.length; i++) {
       const start = index;
       const end = (
@@ -46,8 +47,12 @@ function findOne(workers, data) {
                 workers[k].terminate();
               }
             }
-          } else if (j === 0) {
-            reject("No valid seed found.");
+          } else {
+            rejected++;
+            if (rejected === workers.length) {
+              // all workers have rejected the seed
+              resolve(false);
+            }
           }
         }
       };
