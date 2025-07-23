@@ -34,6 +34,17 @@ const shuffleNum = (l, seed) => {
   return nums;
 };
 
+const convertNums = (nums) => {
+  return (
+    nums[0] +
+    nums[1] * 2 +
+    nums[2] * 6 +
+    nums[3] * 24 +
+    nums[4] * 120 +
+    nums[5] * 720
+  );
+};
+
 const shuffleFromNums = (array, nums) => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = nums[i - 1];
@@ -59,16 +70,12 @@ const shuffleCompare = (nums, seed) => {
  */
 const generateBag2Num = () => {
   const generateAllNumsArrays = (n) => {
-    // returns all possible arrays of numbers that satisfy:
-    // 1. the first number ranges from 0 to n
-    // 2. the second number ranges from 0 to n-1, ...
-    // 3. there are only n-1 numbers in the array
     if (n === 1) return [[]];
     const result = [];
     const subArrays = generateAllNumsArrays(n - 1);
     for (let i = 0; i < n; i++) {
       for (const subArray of subArrays) {
-        const newArray = [i].concat(subArray);
+        const newArray = subArray.concat([i]);
         result.push(newArray);
       }
     }
@@ -84,10 +91,50 @@ const generateBag2Num = () => {
   return bag2num;
 };
 
-console.log(shuffleFromNums([...pieces], [6, 5, 4, 3, 2, 0]));
-console.log(shuffleFromNums([...pieces], [0, 5, 4, 3, 2, 1]));
-
 const bag2num = generateBag2Num();
-console.log(bag2num);
+
+const generateBagTrie = (bag2num) => {
+  const trie = {};
+  for (const bag in bag2num) {
+    let current = trie;
+    for (let i = 0; i < bag.length - 1; i++) {
+      const char = bag[i];
+      if (!current[char]) {
+        current[char] = {};
+      }
+      current = current[char];
+    }
+    current[bag[bag.length - 1]] = bag2num[bag];
+  }
+  return trie;
+};
+
+const getBagCompletions = (bag, trie) => {
+  const completions = [];
+
+  let current = trie;
+  for (const char of bag) {
+    current = current[char];
+  }
+  
+  const getCompletions = (i, trie) => {
+    if (i === 7) {
+      completions.push(convertNums(trie));
+    } else {
+      for (const char in trie) {
+        getCompletions(i + 1, trie[char]);
+      }
+    }
+  };
+
+  getCompletions(bag.length, current);
+  return completions;
+};
+
+const bagTrie = generateBagTrie(bag2num);
+
+console.log(bagTrie);
+
+console.log(getBagCompletions("ZLOS", bagTrie));
 
 export { pieces, shuffle, shuffleNum, shuffleCompare };
