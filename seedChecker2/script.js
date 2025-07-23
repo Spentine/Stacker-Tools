@@ -4,11 +4,44 @@ import { formatQueue } from "./util.js";
 async function main() {
   console.log("Script loaded.");
   
+  // mode select
+  const modeSelect = document.getElementById("mode-select");
+  
+  // find-menu
+  const findMenu = document.getElementById("find-menu");
   const pieceSequenceElement = document.getElementById("piece-sequence");
   const randomizerType = document.getElementById("randomizer-type");
+  const minSeed = document.getElementById("min-seed");
+  const maxSeed = document.getElementById("max-seed");
+  
+  // retrieve-menu
+  const retrieveMenu = document.getElementById("retrieve-menu");
+  const seedInput = document.getElementById("seed-input");
+  
+  // start button
   const startElement = document.getElementById("start-button");
+  
+  // output element
   const outputElement = document.getElementById("output");
   
+  function setMenu(menu) {
+    if (menu === "find") {
+      findMenu.style.display = "block";
+      retrieveMenu.style.display = "none";
+    } else if (menu === "retrieve") {
+      findMenu.style.display = "none";
+      retrieveMenu.style.display = "block";
+    }
+  }
+  
+  // menu toggle
+  modeSelect.addEventListener("change", () => {
+    setMenu(modeSelect.value);
+  });
+  
+  setMenu(modeSelect.value);
+  
+  // find-menu interactivity
   function formatDisplayQueue() {
     const formattedQueue = formatQueue(
       pieceSequenceElement.value,
@@ -17,7 +50,7 @@ async function main() {
     pieceSequenceElement.value = formattedQueue;
   }
   
-  pieceSequenceElement.addEventListener("input", formatDisplayQueue);
+  pieceSequenceElement.addEventListener("change", formatDisplayQueue);
   randomizerType.addEventListener("change", formatDisplayQueue);
 
   startElement.addEventListener("click", async () => {
@@ -26,7 +59,9 @@ async function main() {
 
     const seed = await search({
       queue,
-      type: randomizerType.value,
+      randomizer: randomizerType.value,
+      minSeed: Number(minSeed.value),
+      maxSeed: Number(maxSeed.value),
     });
 
     if (seed === false) {

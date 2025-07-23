@@ -21,20 +21,54 @@
       <p class="paragraph-content">
         Customize what the program will be searching for. The piece sequence, randomizer, and other settings can be adjusted to suit your needs.
       </p>
+      
       <hr>
+      
       <div class="flex">
-        <label for="piece-sequence">Piece Sequence:</label>
-        <input class="stretch-end" type="text" id="piece-sequence" placeholder="Enter piece sequence here">
-      </div>
-      <br>
-      <div class="flex">
-        <label for="randomizer-type">Randomizer Type:</label>
-        <select id="randomizer-type">
-          <option value="7bag" selected>7-Bag</option>
-          <option value="totalMayhem">Total Mayhem</option>
+        <label for="mode-select">Mode:</label>
+        <select class="stretch-end" id="mode-select">
+          <option value="find" selected>Find Seed</option>
+          <option value="retrieve">Retrieve Seed Information</option>
         </select>
       </div>
+      
       <hr>
+      
+      <div id="find-menu" class="config-menu">
+        <div class="flex">
+          <label for="piece-sequence">Piece Sequence:</label>
+          <input class="stretch-end" type="text" id="piece-sequence" placeholder="Enter piece sequence here">
+        </div>
+        <br>
+        <div class="flex">
+          <label for="randomizer-type">Randomizer Type:</label>
+          <select class="stretch-end" id="randomizer-type">
+            <option value="7bag" selected>7-Bag</option>
+            <option value="totalMayhem">Total Mayhem</option>
+          </select>
+        </div>
+        <br>
+        <br>
+        <div class="flex">
+          <label for="min-seed">Minimum Seed:</label>
+          <input class="stretch-end" type="number" id="min-seed" placeholder="Enter minimum seed" value="1">
+        </div>
+        <br>
+        <div class="flex">
+          <label for="max-seed">Maximum Seed:</label>
+          <input class="stretch-end" type="number" id="max-seed" placeholder="Enter maximum seed" value="2147483646">
+        </div>
+      </div>
+      
+      <div id="retrieve-menu" class="config-menu">
+        <div class="flex">
+          <label for="seed-input">Seed:</label>
+          <input class="stretch-end" type="text" id="seed-input" placeholder="Enter seed here">
+        </div>
+      </div>
+      
+      <hr>
+      
       <div class="flex">
         <button id="start-button">Start</button>
       </div>

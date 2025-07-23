@@ -44,7 +44,7 @@ const replaceWithNumbers = (queue) => {
   return numbers;
 };
 
-const generateData = (string) => {
+const generateDataTotalMayhem = (string) => {
   const pieces = getPieces(string);
   const numbers = replaceWithNumbers(pieces);
   return {
@@ -53,7 +53,7 @@ const generateData = (string) => {
   };
 }
 
-const validateSeed = (seed, data) => {
+const validateSeedTotalMayhem = (seed, data) => {
   const numbers = data.numbers;
   for (const number of numbers) {
     seed = lcg(seed);
@@ -65,6 +65,6 @@ const validateSeed = (seed, data) => {
 export {
   nextPiece,
   nextPieces,
-  generateData,
-  validateSeed
+  generateDataTotalMayhem,
+  validateSeedTotalMayhem
 };
