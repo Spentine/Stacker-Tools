@@ -20,33 +20,58 @@ The array shuffler, a *Fisher-Yates* shuffle, depends on **6** random numbers to
 
 Incomplete bags, however, will have many different numbers that are valid. To also skip the overhead of shuffling incomplete bags, a preprocessed dictionary of queues should be generated, and all the valid number sequences should be collected into a set.
 
-### Important Numbers
+# Curiosities
 
--6: 1483866096 (jump backward one bag)
--1: 1407677000 (modular multiplicative inverse)
-+1: 16807
-+6: 470211272 (jump forward one bag)
-
-## Implementation
-
-The data that will be passed will be in a format that is most performant.
+The LCG is very simplistic, and for some reason, TETR.IO didn't restrict the seed input to exclusively be integers. Below are some interesting seeds and how it was found. The function `f` will be an iteration of the LCG that is implicit before every script.
 
 ```js
-{
-  bags: ["ZLOSIJT", "ZLOS"],
-  nums: [
-    {
-      full: true, // full bag
-      fy: [1, 2, 3, 4, 5, 6],
-      sN: 5039 // single number
-    },
-    {
-      full: false, // not full bag
-      nums: Set([ // all numbers that correspond
-        3479, 4919, 3599,
-        4199, 4319, 5039
-      ]),
-    }
-  ]
+f = (x) => (x 16807) % 2147483647;
+```
+
+## $x = f(x)$
+
+For integers, the numbers chosen for the LCG were selected so that integers do not repeat until after all of the possible integers have been iterated through. However, for floats, numbers can be chosen to satisfy this. In JavaScript, because floating point numbers have inaccuracies, theoretically working numbers would not actually work.
+
+To solve the equation, first expand the equation $x = f(x)$, where $n$ is an integer, and solve for $x$.
+
+$$
+x = 16807x + 2147483647n \\
+16806x = -2147483647n \\
+x = \frac{2147483647n}{16806}
+$$
+
+However, due to floating point inaccuracies, many of the solutions wouldn't actually work. I will brute force solutions using a script:
+
+```js
+const a = 16807;
+const m = 2147483647;
+for (let i=1; i<(a-1)/m; i++) {
+  const n = m*i / (a-1);
+  if (n === f(n)) console.log(n);
 }
 ```
+
+This method resulted in the number `1073741823.5` (`2147483647 / 2`), which yields repeating bags of `IZTLJOS`.
+
+## $x = f^r(x)$
+
+To solve this, first expand the equation and solve for $x$.
+
+$$
+x = 16807^r x + 2147483647n \\
+(16807^r - 1)x = -2147483647n \\
+x = \frac{2147483647n}{16807^r - 1}
+$$
+
+Because of floating point inaccuracies, many theoretical solutions wouldn't work, and only powers of 2 should be used. It's not possible to brute force seeds either because of the sheer number of seeds. To check how many powers of two it allows, calculate the largest power of two $16807^r-1$ is divisible by. Below is a small table with corresponding values of `r` and the power of two.
+
+| $r$ | $2^m$ |
+| - | - |
+| 1 | 1 |
+| 2 | 4 |
+| 9 | 7 |
+| 13 | 11 |
+
+However, because of the compounding inaccuracies caused by floating point numbers, even powers of 2 don't work beyond a certain point.
+
+Recall the iteration algorithm, but note the number of binary significant figures in each number; 16807 is about 14.03 bits and 2147483647 is 31 bits. In total, the amount used for computation is 45. Floating point numbers lose precision past 53 bits, so there are only about 7.97 bits of information available to be inaccurate. When dividing by 2, it consumes an extra bit in the form of a decimal, while the overall sizes of the integer component still reach up to 31 bits. Therefore, the maximum number of safe bits is 7 bits, which is the maximum amount.
