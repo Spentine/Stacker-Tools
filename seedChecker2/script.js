@@ -14,6 +14,9 @@ async function main() {
   const minSeed = document.getElementById("min-seed");
   const maxSeed = document.getElementById("max-seed");
   
+  const searchType = document.getElementById("search-type");
+  const minimumSeedAmount = document.getElementById("minimum-seed-amount");
+  
   // retrieve-menu
   const retrieveMenu = document.getElementById("retrieve-menu");
   const seedInput = document.getElementById("seed-input");
@@ -57,17 +60,27 @@ async function main() {
     const queue = pieceSequenceElement.value;
     console.log("Starting with queue:", queue);
 
-    const seed = await search({
+    const results = await search({
       queue,
       randomizer: randomizerType.value,
       minSeed: Number(minSeed.value),
       maxSeed: Number(maxSeed.value),
+      searchType: searchType.value,
+      minimumSeedAmount: Number(minimumSeedAmount.value),
     });
 
-    if (seed === false) {
-      outputElement.textContent = "No seed found.";
-    } else {
-      outputElement.textContent = seed;
+    if (searchType.value === "one") {
+      if (results === false) {
+        outputElement.textContent = "No seed found.";
+      } else {
+        outputElement.textContent = results;
+      }
+    } else if (searchType.value === "all") {
+      if (results.length === 0) {
+        outputElement.textContent = "No seeds found.";
+      } else {
+        outputElement.textContent = results.join(" ");
+      }
     }
   });
 }

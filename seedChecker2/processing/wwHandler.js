@@ -17,7 +17,7 @@ function createWorkers(path="./ww.js", count=workerCount) {
 /**
  * will find a valid seed for a queue given by some data
  */
-function findOne(workers, generationData) {
+function searchWW(workers, generationData) {
   // cancel all workers if they are still running
   function cancelWorkers() {
     for (const worker of workers) {
@@ -33,9 +33,15 @@ function findOne(workers, generationData) {
     const remainder = jobs % workers.length;
     let j = workers.length - remainder; // number of workers that will not get an extra job
     
-    // initialize index and number of rejected workers
+    // initialize index and number of completed workers
     let index = generationData.minSeed;
-    let rejected = 0; // number of workers that have not found the seed
+    let completed = 0; // number of workers that have finished
+    
+    // initialize results array if searching for all seeds
+    let results;
+    if (generationData.searchType === "all") {
+      results = [];
+    }
     
     // send jobs to workers
     for (let i = 0; i < workers.length; i++) {
@@ -50,33 +56,60 @@ function findOne(workers, generationData) {
       
       // send message to worker to start searching for a seed
       workers[i].postMessage({
-        type: "getOneInRange",
+        type: generationData.searchType || "one", // default to "one" if not specified
         randomizer: generationData.randomizer || "7bag", // default to 7bag if not specified
         start: index,
         end,
         data: generationData.data,
+        minimumSeedAmount: generationData.minimumSeedAmount || 1000, // default to 1000 if not specified
       });
       
       // message received from worker
       workers[i].onmessage = (e) => {
         // correct type
         if (e.data.type === "result") {
-          if (e.data.result !== false) { // found seed
-            resolve(e.data.result);
-            cancelWorkers();
-          } else { // didn't find seed
-            rejected++;
-            if (rejected === workers.length) {
-              // all workers didn't find a seed
-              resolve(false);
+          if (generationData.searchType === "one") { // searching for one
+            if (e.data.result !== false) { // found seed
+              resolve(e.data.result);
+              cancelWorkers();
+            } else { // didn't find seed
+              completed++;
+              if (completed === workers.length) {
+                // all workers didn't find a seed
+                resolve(false);
+                cancelWorkers();
+              }
+            }
+          } else if (generationData.searchType === "all") { // searching for all
+            // result will always be an array of seeds
+            if (Array.isArray(e.data.result)) { // is array
+              results.push(...e.data.result);
+            } else if (e.data.result !== false) { // is individual seed
+              results.push(e.data.result);
+            }
+            
+            if (
+              results.length >= generationData.minimumSeedAmount // reached minimum seed amount
+            ) {
+              resolve(results);
               cancelWorkers();
             }
           }
+        } else if (e.data.type === "completed") {
+          if (generationData.searchType === "all") {
+            completed++;
+            if (completed === workers.length) {
+              // all workers have finished
+              resolve(results);
+              cancelWorkers();
+            } 
+          }
         }
       };
+      
       index = end;
     }
   });
 }
 
-export { createWorkers, workerCount, findOne };
+export { createWorkers, workerCount, searchWW };

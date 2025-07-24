@@ -74,7 +74,7 @@ button:hover {
   background-color: var(--button-hover-color);
 }
 
-pre {
+#output {
   font-weight: var(--text-weight);
   font-family: inherit;
   background-color: var(--output-color);

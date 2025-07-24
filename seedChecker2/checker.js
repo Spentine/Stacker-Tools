@@ -3,18 +3,25 @@ import { lcg } from './processing/lcg.js';
 // 7-bag
 import { generateBags } from './processing/7bag/fy.js';
 import { generateQueueData } from './processing/7bag/data.js';
-import { createWorkers, workerCount, findOne } from './processing/wwHandler.js';
+import { createWorkers, workerCount, searchWW } from './processing/wwHandler.js';
 
 // total mayhem
 import { nextPieces, generateDataTotalMayhem } from './processing/totalMayhem/random.js';
 
 async function search(data) {
-  const { queue, randomizer, minSeed, maxSeed } = data;
+  const {
+    queue,
+    randomizer,
+    minSeed,
+    maxSeed,
+    searchType,
+    minimumSeedAmount,
+  } = data;
   
   const startTime = Date.now(); // time start
   console.log("Validating seed:", queue);
   
-  let seed;
+  let results;
   let pieceGeneration;
   let queueData;
   
@@ -37,23 +44,30 @@ async function search(data) {
   generationData.minSeed = minSeed || 1; // default to 1 if not provided
   generationData.maxSeed = maxSeed || 2147483646; // default to max seed if not provided
   generationData.data = queueData;
+  generationData.searchType = searchType || "one"; // default to "one" if not provided
+  generationData.minimumSeedAmount = minimumSeedAmount || 1000; // default to 1000 if not provided
   
   const workers = createWorkers();
-  seed = await findOne(workers, generationData);
   
-  if (seed === false) {
-    console.log("No seed found.");
-  } else {
-    console.log("Found seed:", seed);
-    console.log("Seed queue:", pieceGeneration(seed));
+  if (searchType === "one") {
+    results = await searchWW(workers, generationData);
+    
+    if (results === false) {
+      console.log("No seed found.");
+    } else {
+      console.log("Found seed:", results);
+      console.log("Seed queue:", pieceGeneration(results));
+    }
+  } else if (searchType === "all") {
+    results = await searchWW(workers, generationData);
+    
+    console.log("Found seeds:", results);
   }
   
   const timeElapsed = Date.now() - startTime; // time elapsed
   console.log("Time elapsed:", timeElapsed, "ms");
   
-  return seed;
+  return results;
 }
 
-export {
-  search,
-};
+export { search };

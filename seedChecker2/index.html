@@ -58,6 +58,20 @@
           <label for="max-seed">Maximum Seed:</label>
           <input class="stretch-end" type="number" id="max-seed" placeholder="Enter maximum seed" value="2147483646">
         </div>
+        <br>
+        <br>
+        <div class="flex">
+          <label for="search-type"> Search Type: </label>
+          <select class="stretch-end" id="search-type">
+            <option value="one" selected>Search for One</option>
+            <option value="all">Return All</option>
+          </select>
+        </div>
+        <br>
+        <div class="flex">
+          <label for="minimum-seed-amount"> Minimum Number of Seeds to Return: </label>
+          <input class="stretch-end" type="number" id="minimum-seed-amount" placeholder="Enter minimum seed amount" value="1000">
+        </div>
       </div>
       
       <div id="retrieve-menu" class="config-menu">
@@ -80,7 +94,7 @@
         The results of the seed checking will be displayed here. You can view more information about it by switching the configuration of the program.
       </p>
       <hr>
-      <pre id="output"></pre>
+      <p id="output"></p>
     </div>
     
   </body>
