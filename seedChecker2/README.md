@@ -1,8 +1,8 @@
 # SeedChecker V2
 
-A program to brute force seeds in the game **TETR.IO**.
+A program to brute force seeds in the game **[TETR.IO](https://tetr.io)**.
 
-The successor to *Seed Checker V1*. This new program uses more advanced algorithms to quickly brute force game seeds. Rather than shuffling queues, it instead only operates on numbers and more efficiently compares it to caching lists. To further multiply the speed, multithreading is implemented to make use of all logical processors on the machine, allowing for faster and more efficient seed checking on a web application.
+The successor to *[Seed Checker V1](https://spentine.github.io/Stacker-Tools/seedChecker/)*. This new program uses more advanced algorithms to quickly brute force game seeds. Rather than shuffling queues, it instead only operates on numbers and more efficiently compares it to cached lists. To further multiply the speed, multithreading is implemented to make use of all logical processors on the machine, allowing for faster and more efficient seed checking on a web application.
 
 ## About Block Stacking Games
 
@@ -35,7 +35,7 @@ The program will try to find a seed in this mode.
 - **Maximum Seed**: The maximum value of a seed.
 - **Search Type**: Determines how the program will handle the searched seeds.
   - **Search for One**: The program will stop searching once it finds one valid seed.
-  - **Search for All**: The program will search for a number of seeds before it stops, or if there are no more seeds to exhaust.
+  - **Return All**: The program will search for a number of seeds before it stops, or if there are no more seeds to exhaust.
 - **Maximum Seed Amount**: If the *search type* is set to *search for all*, then it will specify the number of seeds to search for.
 
 ### Retrieve Seed Information
