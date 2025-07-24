@@ -1,6 +1,7 @@
 import { search } from "./checker.js";
 import { formatQueue } from "./util.js";
 import { getSeedInfo } from "./seedInfo.js";
+import { bound } from "./processing/lcg.js";
 
 async function main() {
   console.log("Script loaded.");
@@ -66,13 +67,16 @@ async function main() {
       maximumSeedAmountContainer.style.display = "none";
     }
   });
-
+  
+  // retrieve-menu interactivity (none)
+  
+  // start
   startElement.addEventListener("click", async () => {
     if (modeSelect.value === "find") {
       const queue = pieceSequenceElement.value;
       console.log("Starting with queue:", queue);
 
-      const results = await search({
+      const validResults = await search({
         queue,
         randomizer: randomizerType.value,
         minSeed: Number(minSeed.value),
@@ -80,6 +84,13 @@ async function main() {
         searchType: searchType.value,
         maximumSeedAmount: Number(maximumSeedAmount.value),
       });
+      
+      if (!validResults.valid) {
+        outputElement.textContent = validResults.reason;
+        return;
+      }
+      
+      const results = validResults.results;
 
       if (searchType.value === "one") {
         if (results === false) {
@@ -95,7 +106,8 @@ async function main() {
         }
       }
     } else if (modeSelect.value === "retrieve") {
-      const seed = Number(seedInput.value);
+      const originalSeed = Number(seedInput.value);
+      const seed = bound(seedInput.value);
       
       if (!seed) {
         outputElement.textContent = "Please enter a seed.";
@@ -103,13 +115,28 @@ async function main() {
       }
       
       const randomizer = randomizerType.value;
+      const randomizerDisplayMap = {
+        "7bag": "7-Bag",
+        "totalMayhem": "Total Mayhem",
+      }
       
       const data = { seed, randomizer };
       const info = getSeedInfo(data);
       
       const pieces = info.pieces;
 
-      outputElement.textContent = pieces;
+      outputElement.textContent = (
+        ((originalSeed === seed)
+          ? `Seed: ${seed}\n`
+          : `Equivalent Seed: ${seed}\n`
+        )
+        + ((0 < seed < 1/16807)
+          ? `The seed is technically a valid seed, but it breaks the LCG and piece selection algorithm in TETR.IO, causing it to generate an invalid index, and ending the game prematurely.\n`
+          : ``
+        )
+        + `Randomizer: ${randomizerDisplayMap[randomizer]}\n`
+        + `Pieces: ${pieces}`
+      );
     }
   });
 }

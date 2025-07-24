@@ -60,9 +60,8 @@ function bagData(bag) {
 
 function generateQueueData(string) {
   const bags = splitIntoBags(string);
-  if (bags.length === 0) return false;
   const valid = validateBagPossibility(bags);
-  if (!valid) return false;
+  if (!valid.valid) return valid;
   const data = {
     bags: bags,
     nums: [],
@@ -70,7 +69,10 @@ function generateQueueData(string) {
   for (const bag of bags) {
     data.nums.push(bagData(bag));
   }
-  return data;
+  return {
+    valid: true,
+    data: data,
+  };
 }
 
 export { generateQueueData };

@@ -24,19 +24,22 @@ async function search(data) {
   let results;
   let pieceGeneration;
   let queueData;
+  let validQueueData;
   
   if (randomizer === "7bag") {
-    queueData = generateQueueData(queue);
+    validQueueData = generateQueueData(queue);
     pieceGeneration = (seed) => generateBags(4, seed);
   } else if (randomizer === "totalMayhem") {
-    queueData = generateDataTotalMayhem(queue);
+    validQueueData = generateDataTotalMayhem(queue);
     pieceGeneration = (seed) => nextPieces(28, seed);
   }
   
-  if (!queueData) {
-    console.log("Invalid queue data.");
-    return;
+  if (!validQueueData.valid) {
+    console.log(validQueueData.reason);
+    return validQueueData;
   }
+  
+  queueData = validQueueData.data;
   
   const generationData = {};
   
@@ -67,7 +70,10 @@ async function search(data) {
   const timeElapsed = Date.now() - startTime; // time elapsed
   console.log("Time elapsed:", timeElapsed, "ms");
   
-  return results;
+  return {
+    valid: true,
+    results: results,
+  };
 }
 
 export { search };

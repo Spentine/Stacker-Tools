@@ -185,15 +185,26 @@ const bagTrie = generateBagTrie(bag2num);
 /**
  * check if bags are possible from a queue
  * @param {Array} bags - The array of bags to check.
- * @returns {boolean} - Returns true if all bags are valid, otherwise false.
  */
 function validateBagPossibility(bags) {
-  // for each bag, check if all pieces are unique
-  for (const bag of bags) {
-    const piecesSet = new Set(bag);
-    if (piecesSet.size !== bag.length) return false;
+  if (bags.length === 0) {
+    return {
+      valid: false,
+      reason: "No bags found in queue."
+    };
   }
-  return true;
+  // for each bag, check if all pieces are unique
+  for (let i = 0; i < bags.length; i++) {
+    const bag = bags[i];
+    const piecesSet = new Set(bag);
+    if (piecesSet.size !== bag.length) {
+      return {
+        valid: false,
+        reason: `Duplicate pieces found within same bag. (bag ${i + 1})`
+      };
+    }
+  }
+  return { valid: true };
 }
 
 export {

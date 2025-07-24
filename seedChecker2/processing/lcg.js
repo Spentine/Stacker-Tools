@@ -9,4 +9,12 @@ const lcg = (x) => (a * x) % m;
 
 const toFloat = (x) => (x - 1) / (m - 1);
 
-export { lcg, toFloat };
+const bound = (x) => {
+  x = x % m;
+  if (x <= 0) {
+    x += m - 1;
+  }
+  return x;
+};
+
+export { lcg, toFloat, bound };

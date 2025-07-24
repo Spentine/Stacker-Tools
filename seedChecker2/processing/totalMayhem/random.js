@@ -48,8 +48,11 @@ const generateDataTotalMayhem = (string) => {
   const pieces = getPieces(string);
   const numbers = replaceWithNumbers(pieces);
   return {
-    pieces: pieces,
-    numbers: numbers
+    valid: true,
+    data: {
+      pieces: pieces,
+      numbers: numbers
+    }
   };
 }
 
