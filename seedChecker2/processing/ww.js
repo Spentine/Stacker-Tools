@@ -10,7 +10,7 @@ function getOneInRange(start, end, data, validationFunction) {
   return false;
 }
 
-function getAllInRange(start, end, data, validationFunction, minimumSeedAmount) {
+function getAllInRange(start, end, data, validationFunction) {
   const result = [];
   for (let i = start; i < end; i++) {
     if (validationFunction(i, data)) {
@@ -41,8 +41,8 @@ onmessage = function (e) {
     postMessage({ type: "result", result });
   } else if (eventData.type === "all") {
     // try to find all valid seeds in the specified range
-    const { start, end, data, minimumSeedAmount } = eventData;
-    const result = getAllInRange(start, end, data, validationFunction, minimumSeedAmount);
+    const { start, end, data } = eventData;
+    const result = getAllInRange(start, end, data, validationFunction);
     
     postMessage({ type: "completed" });
   }

@@ -61,7 +61,7 @@ function searchWW(workers, generationData) {
         start: index,
         end,
         data: generationData.data,
-        minimumSeedAmount: generationData.minimumSeedAmount || 1000, // default to 1000 if not specified
+        maximumSeedAmount: generationData.maximumSeedAmount || 1000, // default to 1000 if not specified
       });
       
       // message received from worker
@@ -89,7 +89,7 @@ function searchWW(workers, generationData) {
             }
             
             if (
-              results.length >= generationData.minimumSeedAmount // reached minimum seed amount
+              results.length >= generationData.maximumSeedAmount // reached maximum seed amount
             ) {
               resolve(results);
               cancelWorkers();

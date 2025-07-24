@@ -34,18 +34,20 @@
       
       <hr>
       
+      <div class="flex">
+        <label for="randomizer-type">Randomizer Type:</label>
+        <select class="stretch-end" id="randomizer-type">
+          <option value="7bag" selected>7-Bag</option>
+          <option value="totalMayhem">Total Mayhem</option>
+        </select>
+      </div>
+      
+      <br>
+      
       <div id="find-menu" class="config-menu">
         <div class="flex">
           <label for="piece-sequence">Piece Sequence:</label>
           <input class="stretch-end" type="text" id="piece-sequence" placeholder="Enter piece sequence here">
-        </div>
-        <br>
-        <div class="flex">
-          <label for="randomizer-type">Randomizer Type:</label>
-          <select class="stretch-end" id="randomizer-type">
-            <option value="7bag" selected>7-Bag</option>
-            <option value="totalMayhem">Total Mayhem</option>
-          </select>
         </div>
         <br>
         <br>
@@ -68,9 +70,9 @@
           </select>
         </div>
         <br>
-        <div class="flex">
-          <label for="minimum-seed-amount"> Minimum Number of Seeds to Return: </label>
-          <input class="stretch-end" type="number" id="minimum-seed-amount" placeholder="Enter minimum seed amount" value="1000">
+        <div class="flex" id="maximum-seed-amount-container">
+          <label for="maximum-seed-amount"> Maximum Seed Amount: </label>
+          <input class="stretch-end" type="number" id="maximum-seed-amount" placeholder="Enter maximum seed amount" value="1000">
         </div>
       </div>
       

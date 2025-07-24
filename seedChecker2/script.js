@@ -1,5 +1,6 @@
 import { search } from "./checker.js";
 import { formatQueue } from "./util.js";
+import { getSeedInfo } from "./seedInfo.js";
 
 async function main() {
   console.log("Script loaded.");
@@ -15,7 +16,8 @@ async function main() {
   const maxSeed = document.getElementById("max-seed");
   
   const searchType = document.getElementById("search-type");
-  const minimumSeedAmount = document.getElementById("minimum-seed-amount");
+  const maximumSeedAmountContainer = document.getElementById("maximum-seed-amount-container");
+  const maximumSeedAmount = document.getElementById("maximum-seed-amount");
   
   // retrieve-menu
   const retrieveMenu = document.getElementById("retrieve-menu");
@@ -55,32 +57,59 @@ async function main() {
   
   pieceSequenceElement.addEventListener("change", formatDisplayQueue);
   randomizerType.addEventListener("change", formatDisplayQueue);
+  
+  maximumSeedAmountContainer.style.display = "none";
+  searchType.addEventListener("change", () => {
+    if (searchType.value === "all") {
+      maximumSeedAmountContainer.style.display = "block";
+    } else {
+      maximumSeedAmountContainer.style.display = "none";
+    }
+  });
 
   startElement.addEventListener("click", async () => {
-    const queue = pieceSequenceElement.value;
-    console.log("Starting with queue:", queue);
+    if (modeSelect.value === "find") {
+      const queue = pieceSequenceElement.value;
+      console.log("Starting with queue:", queue);
 
-    const results = await search({
-      queue,
-      randomizer: randomizerType.value,
-      minSeed: Number(minSeed.value),
-      maxSeed: Number(maxSeed.value),
-      searchType: searchType.value,
-      minimumSeedAmount: Number(minimumSeedAmount.value),
-    });
+      const results = await search({
+        queue,
+        randomizer: randomizerType.value,
+        minSeed: Number(minSeed.value),
+        maxSeed: Number(maxSeed.value),
+        searchType: searchType.value,
+        maximumSeedAmount: Number(maximumSeedAmount.value),
+      });
 
-    if (searchType.value === "one") {
-      if (results === false) {
-        outputElement.textContent = "No seed found.";
-      } else {
-        outputElement.textContent = results;
+      if (searchType.value === "one") {
+        if (results === false) {
+          outputElement.textContent = "No seed found.";
+        } else {
+          outputElement.textContent = results;
+        }
+      } else if (searchType.value === "all") {
+        if (results.length === 0) {
+          outputElement.textContent = "No seeds found.";
+        } else {
+          outputElement.textContent = results.join(" ");
+        }
       }
-    } else if (searchType.value === "all") {
-      if (results.length === 0) {
-        outputElement.textContent = "No seeds found.";
-      } else {
-        outputElement.textContent = results.join(" ");
+    } else if (modeSelect.value === "retrieve") {
+      const seed = Number(seedInput.value);
+      
+      if (!seed) {
+        outputElement.textContent = "Please enter a seed.";
+        return;
       }
+      
+      const randomizer = randomizerType.value;
+      
+      const data = { seed, randomizer };
+      const info = getSeedInfo(data);
+      
+      const pieces = info.pieces;
+
+      outputElement.textContent = pieces;
     }
   });
 }

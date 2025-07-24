@@ -15,7 +15,7 @@ async function search(data) {
     minSeed,
     maxSeed,
     searchType,
-    minimumSeedAmount,
+    maximumSeedAmount,
   } = data;
   
   const startTime = Date.now(); // time start
@@ -45,7 +45,7 @@ async function search(data) {
   generationData.maxSeed = maxSeed || 2147483646; // default to max seed if not provided
   generationData.data = queueData;
   generationData.searchType = searchType || "one"; // default to "one" if not provided
-  generationData.minimumSeedAmount = minimumSeedAmount || 1000; // default to 1000 if not provided
+  generationData.maximumSeedAmount = maximumSeedAmount || 1000; // default to 1000 if not provided
   
   const workers = createWorkers();
   

@@ -33,7 +33,7 @@ body {
   color: var(--text-color);
   font-family: "Reddit Mono", monospace;
   
-  padding: 0;
+  padding: 0 16px;
   margin: 0;
 }
 
@@ -81,6 +81,8 @@ button:hover {
   
   margin: 0;
   padding: 8px;
+  
+  word-break: break-word;
 }
 
 hr {
@@ -95,8 +97,8 @@ hr {
 
 .container {
   max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
+  margin: 16px auto;
+  padding: 16px;
 
   background-color: var(--container-background-color);
 }
