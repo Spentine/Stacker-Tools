@@ -37,6 +37,7 @@ The program will try to find a seed in this mode.
   - **Search for One**: The program will stop searching once it finds one valid seed.
   - **Return All**: The program will search for a number of seeds before it stops, or if there are no more seeds to exhaust.
 - **Maximum Seed Amount**: If the *search type* is set to *search for all*, then it will specify the number of seeds to search for.
+- **Threads**: The number of threads to use for the search. The number it is set to by default is the highest number of logical cores.
 
 ### Retrieve Seed Information
 

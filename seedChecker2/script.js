@@ -33,6 +33,9 @@ async function main() {
   // output element
   const outputElement = document.getElementById("output");
   
+  // url query parameters to save state
+  const urlParams = new URLSearchParams(window.location.search);
+  
   function setMenu(menu) {
     if (menu === "find") {
       findMenu.style.display = "block";
