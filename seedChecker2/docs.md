@@ -28,12 +28,12 @@ URL query parameters should be provided to make it easier to share configuration
 
 - **Version**: 1 `6 bits`
 - **Randomizer Type**: `{bool}`
-- **Search Type**: `{bool}`.
-- **Minimum Seed**: `{float}`
-- **Maximum Seed**: `{float}`.
-- **Threads**: `{float}`
-- **Maximum Seed Amount**: `{float}`
-- **Piece Sequence**: `{str}`.
+- **Search Type**: `{bool}`
+- **Minimum Seed**: `{uint32}` (1 - 2^31-2)
+- **Maximum Seed**: `{uint32}` (1 - 2^31-2)
+- **Threads**: `{uint8}` (1 - 256)
+- **Maximum Seed Amount**: `{uint32}` (1 - 2^31-2)
+- **Piece Sequence**: `{str}`
 
 ```js
 {

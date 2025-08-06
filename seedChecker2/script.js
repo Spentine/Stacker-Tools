@@ -3,7 +3,7 @@ import { formatQueue } from "./util.js";
 import { getSeedInfo } from "./seedInfo.js";
 import { bound } from "./processing/lcg.js";
 import { getWorkerCount, setWorkerCount } from "./processing/wwHandler.js";
-import { convertConfig } from "./urlParam.js";
+import { getUrlConfig } from "./urlParam.js";
 
 async function main() {
   console.log("Script loaded.");
@@ -54,8 +54,14 @@ async function main() {
     const config = getConfigFromFields();
     console.log("Config changed:", config);
     
-    const converted = convertConfig(config);
+    const converted = getUrlConfig(config);
     console.log("Converted config:", converted);
+    
+    // update URL
+    const newUrl = new URL(window.location.href);
+    newUrl.searchParams.set("c", converted);
+    
+    window.history.replaceState({}, "", newUrl.toString());
   }
   
   function setMenu(menu) {
@@ -104,15 +110,25 @@ async function main() {
     valueChanged();
   });
   
-  minSeed.addEventListener("change", valueChanged);
-  maxSeed.addEventListener("change", valueChanged);
+  minSeed.addEventListener("change", () => {
+    // bound value
+    const value = Math.max(1, Math.min(parseInt(minSeed.value), 2147483646));
+    minSeed.value = value;
+    valueChanged();
+  });
+  maxSeed.addEventListener("change", () => {
+    // bound value
+    const value = Math.max(1, Math.min(parseInt(maxSeed.value), 2147483646));
+    maxSeed.value = value;
+    valueChanged();
+  });
   maximumSeedAmount.addEventListener("change", valueChanged);
   threads.addEventListener("change", valueChanged);
   
   // threads
   threads.value = getWorkerCount();
   threads.addEventListener("change", () => {
-    const newWorkerCount = Math.max(1, Math.min(Number(threads.value), 64));
+    const newWorkerCount = Math.max(1, Math.min(parseInt(threads.value), 256));
     setWorkerCount(newWorkerCount);
     threads.value = newWorkerCount;
     console.log(`Worker count set to ${newWorkerCount}`);

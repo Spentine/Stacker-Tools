@@ -1,3 +1,4 @@
+// ai generated
 function convertNumberToByteArray(number) {
   // ieee754 64-bit double precision
   const buffer = new ArrayBuffer(8);
@@ -6,17 +7,36 @@ function convertNumberToByteArray(number) {
   return new Uint8Array(buffer);
 }
 
+// ai generated
 function convertByteArrayToNumber(byteArray) {
   const buffer = byteArray.buffer.slice(byteArray.byteOffset, byteArray.byteOffset + byteArray.byteLength);
   const view = new DataView(buffer);
   return view.getFloat64(0);
 }
 
+// ai generated
+function convertLongToByteArray(long) {
+  // 32 bit int
+  const buffer = new ArrayBuffer(4);
+  const view = new DataView(buffer);
+  view.setInt32(0, long);
+  return new Uint8Array(buffer);
+}
+
+// ai generated
+function convertByteArrayToLong(byteArray) {
+  const buffer = byteArray.buffer.slice(byteArray.byteOffset, byteArray.byteOffset + byteArray.byteLength);
+  const view = new DataView(buffer);
+  return view.getInt32(0);
+}
+
+// ai generated
 function convertStringToByteArray(str) {
   const encoder = new TextEncoder();
   return encoder.encode(str);
 }
 
+// ai generated
 function convertByteArrayToString(byteArray) {
   const decoder = new TextDecoder();
   return decoder.decode(byteArray);
@@ -42,7 +62,7 @@ function convertQueueToByteArray(str) {
   // number of bits to be padded to make it a multiple of 8
   const remainder = (bits % 8 === 0) ? 0 : (8 - bits % 8);
   
-  console.log("Pieces:", pieces);
+  // console.log("Pieces:", pieces);
   
   let queueBigInt = 0n;
   for (const piece of pieces) {
@@ -52,7 +72,7 @@ function convertQueueToByteArray(str) {
   // pad remainder bits
   const paddedQueue = queueBigInt << BigInt(remainder);
   
-  console.log("Padded queue:", paddedQueue.toString(2).padStart(byteLength * 8, "0"));
+  // console.log("Padded queue:", paddedQueue.toString(2).padStart(byteLength * 8, "0"));
   
   // convert to byte array
   const byteArray = new Uint8Array(byteLength);
@@ -63,7 +83,7 @@ function convertQueueToByteArray(str) {
   for (let index = 0; index < byteLength; index++) {
     const byte = Number((paddedQueue & bitMask) >> shiftAmount);
     byteArray[index] = byte;
-    console.log(`Byte ${index}:`, byte.toString(2).padStart(8, "0"));
+    // console.log(`Byte ${index}:`, byte.toString(2).padStart(8, "0"));
     
     bitMask = bitMask >> 8n; // shift to next byte
     shiftAmount -= 8n; // decrease shift amount
@@ -78,7 +98,7 @@ function convertByteArrayToQueue(byteArray) {
     queueBigInt = (queueBigInt << 8n) | BigInt(byte);
   }
   queueBigInt <<= 3n; // add 0b000 at the end as an end marker
-  console.log("Queue BigInt:", queueBigInt.toString(2));
+  // console.log("Queue BigInt:", queueBigInt.toString(2));
   
   const totalBits = byteArray.length * 8 + 3;
   let bitMask = 0b111n << BigInt(totalBits - 3); // mask for the first piece
@@ -90,7 +110,7 @@ function convertByteArrayToQueue(byteArray) {
     shiftAmount -= 3n;
   }
   
-  console.log("Pieces:", pieces);
+  // console.log("Pieces:", pieces);
   
   // remove last piece (end marker)
   pieces.pop();
@@ -106,7 +126,7 @@ function convertByteArrayToQueue(byteArray) {
   return piecesStr;
 }
 
-function convertConfig(config) {
+function convertConfigTypeFind(config) {
   // byte 1
   /*
     [vvvvvvrs]
@@ -120,33 +140,63 @@ function convertConfig(config) {
   const byte = (version << 2) | (randomizerType << 1) | searchType;
   const byteArray1 = new Uint8Array(1);
   
-  // floats
-  const minimumSeed = convertNumberToByteArray(config.minSeed);
-  const maximumSeed = convertNumberToByteArray(config.maxSeed);
-  const threads = convertNumberToByteArray(config.threads);
-  const maximumSeedAmount = convertNumberToByteArray(config.maxSeedAmount);
+  // int
+  const threads = new Uint8Array(1);
+  threads[0] = config.threads - 1; // 1-256, so store 0-255
+  
+  // longs
+  const minimumSeed = convertLongToByteArray(config.minSeed);
+  const maximumSeed = convertLongToByteArray(config.maxSeed);
+  const maximumSeedAmount = convertLongToByteArray(config.maxSeedAmount);
   
   // queue
   const pieceSequence = convertQueueToByteArray(config.pieceSequence);
   
   // combine all
   const byteArray = new Uint8Array(
-    25 + // 1 byte + minSeed, maxSeed, threads
-    (searchType === "all" ? 8 : 0) + // maximumSeedAmount if searchType is "all"
+    1 + minimumSeed.length + maximumSeed.length + threads.length +
+    (searchType === "all" ? maximumSeedAmount.length : 0) + // maximumSeedAmount if searchType is "all"
     pieceSequence.length // length of pieceSequence
   );
   byteArray[0] = byte;
   byteArray.set(minimumSeed, 1);
-  byteArray.set(maximumSeed, 9);
-  byteArray.set(threads, 17);
+  byteArray.set(maximumSeed, 5);
+  byteArray.set(threads, 9);
   if (searchType === "all") {
-    byteArray.set(maximumSeedAmount, 25);
-    byteArray.set(pieceSequence, 33);
+    byteArray.set(maximumSeedAmount, 10);
+    byteArray.set(pieceSequence, 14);
   } else {
-    byteArray.set(pieceSequence, 25);
+    byteArray.set(pieceSequence, 10);
   }
   
   return byteArray;
 }
 
-export { convertConfig };
+function getUrlConfigTypeFind(config) {
+  const byteArray = convertConfigTypeFind(config);
+  // convert to base64 string
+  const base64String = btoa(String.fromCharCode(...byteArray));
+  
+  // replace special characters to make it URL safe
+  let safe = base64String
+    .replaceAll("+", "-") // replace + with -
+    .replaceAll("/", "_") // replace / with _
+    .replaceAll("=", ""); // remove padding
+  
+  // do some special replacements
+  const replacements = {
+    "AAAA": "~",
+    "____": ".",
+  };
+  for (const [key, value] of Object.entries(replacements)) {
+    safe = safe.replaceAll(key, value);
+  }
+  
+  return safe;
+}
+
+function getUrlConfig(config) {
+  return getUrlConfigTypeFind(config);
+}
+
+export { getUrlConfig };
