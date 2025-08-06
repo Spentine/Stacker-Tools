@@ -20,6 +20,35 @@ The array shuffler, a *Fisher-Yates* shuffle, depends on **6** random numbers to
 
 Incomplete bags, however, will have many different numbers that are valid. To also skip the overhead of shuffling incomplete bags, a preprocessed dictionary of queues should be generated, and all the valid number sequences should be collected into a set.
 
+## URL Query Parameters
+
+URL query parameters should be provided to make it easier to share configurations. However, I want to prioritize having a shorter URL, so I will instead use only one query parameter to store all data.
+
+### Find Seed
+
+- **Version**: 1 `6 bits`
+- **Randomizer Type**: `{bool}`
+- **Search Type**: `{bool}`.
+- **Minimum Seed**: `{float}`
+- **Maximum Seed**: `{float}`.
+- **Threads**: `{float}`
+- **Maximum Seed Amount**: `{float}`
+- **Piece Sequence**: `{str}`.
+
+```js
+{
+  randomizerType, searchType,
+  minSeed, maxSeed, threads, maxSeedAmount,
+  pieceSequence
+}
+```
+
+### Retrieve Seed Information
+
+- **Version**: 1 `7 bits`
+- **Randomizer Type**: `{bool}`
+- **Seed**: `{float}`
+
 # Curiosities
 
 The LCG is very simplistic, and for some reason, TETR.IO didn't restrict the seed input to exclusively be integers. Below are some interesting seeds and how it was found. The function `f` will be an iteration of the LCG that is implicit before every script.

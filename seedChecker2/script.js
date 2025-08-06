@@ -3,6 +3,7 @@ import { formatQueue } from "./util.js";
 import { getSeedInfo } from "./seedInfo.js";
 import { bound } from "./processing/lcg.js";
 import { getWorkerCount, setWorkerCount } from "./processing/wwHandler.js";
+import { convertConfig } from "./urlParam.js";
 
 async function main() {
   console.log("Script loaded.");
@@ -36,6 +37,27 @@ async function main() {
   // url query parameters to save state
   const urlParams = new URLSearchParams(window.location.search);
   
+  function getConfigFromFields() {
+    const config = {
+      randomizerType: randomizerType.value || "7bag",
+      searchType: searchType.value || "one",
+      minSeed: Number(minSeed.value) || 0,
+      maxSeed: Number(maxSeed.value) || 2147483646,
+      threads: Number(threads.value) || 1,
+      maxSeedAmount: Number(maximumSeedAmount.value) || 1000,
+      pieceSequence: pieceSequenceElement.value || "ZLOSIJT",
+    }
+    return config;
+  }
+  
+  function valueChanged() {
+    const config = getConfigFromFields();
+    console.log("Config changed:", config);
+    
+    const converted = convertConfig(config);
+    console.log("Converted config:", converted);
+  }
+  
   function setMenu(menu) {
     if (menu === "find") {
       findMenu.style.display = "block";
@@ -49,6 +71,7 @@ async function main() {
   // menu toggle
   modeSelect.addEventListener("change", () => {
     setMenu(modeSelect.value);
+    valueChanged();
   });
   
   setMenu(modeSelect.value);
@@ -62,9 +85,15 @@ async function main() {
     pieceSequenceElement.value = formattedQueue;
   }
   
-  pieceSequenceElement.addEventListener("change", formatDisplayQueue);
-  randomizerType.addEventListener("change", formatDisplayQueue);
-  
+  pieceSequenceElement.addEventListener("change", () => {
+    formatDisplayQueue();
+    valueChanged();
+  });
+  randomizerType.addEventListener("change", () => {
+    formatDisplayQueue();
+    valueChanged();
+  });
+
   maximumSeedAmountContainer.style.display = "none";
   searchType.addEventListener("change", () => {
     if (searchType.value === "all") {
@@ -72,7 +101,13 @@ async function main() {
     } else {
       maximumSeedAmountContainer.style.display = "none";
     }
+    valueChanged();
   });
+  
+  minSeed.addEventListener("change", valueChanged);
+  maxSeed.addEventListener("change", valueChanged);
+  maximumSeedAmount.addEventListener("change", valueChanged);
+  threads.addEventListener("change", valueChanged);
   
   // threads
   threads.value = getWorkerCount();
