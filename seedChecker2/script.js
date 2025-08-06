@@ -3,7 +3,7 @@ import { formatQueue } from "./util.js";
 import { getSeedInfo } from "./seedInfo.js";
 import { bound } from "./processing/lcg.js";
 import { getWorkerCount, setWorkerCount } from "./processing/wwHandler.js";
-import { getUrlConfig } from "./urlParam.js";
+import { getUrlConfig, decodeUrlConfig } from "./urlParam.js";
 
 async function main() {
   console.log("Script loaded.");
@@ -35,7 +35,16 @@ async function main() {
   const outputElement = document.getElementById("output");
   
   // url query parameters to save state
-  const urlParams = new URLSearchParams(window.location.search);
+  function decodeFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (!urlParams.has("c")) return;
+    const configString = urlParams.get("c");
+    const config = decodeUrlConfig(configString);
+    console.log("Decoded config:", config);
+    setFieldsFromConfig(config);
+    formatDisplayQueue();
+  }
+  decodeFromUrl();
   
   function getConfigFromFields() {
     const config = {
@@ -45,9 +54,19 @@ async function main() {
       maxSeed: Number(maxSeed.value) || 2147483646,
       threads: Number(threads.value) || 1,
       maxSeedAmount: Number(maximumSeedAmount.value) || 1000,
-      pieceSequence: pieceSequenceElement.value || "ZLOSIJT",
+      pieceSequence: pieceSequenceElement.value || "",
     }
     return config;
+  }
+  
+  function setFieldsFromConfig(config) {
+    randomizerType.value = config.randomizerType || "7bag";
+    searchType.value = config.searchType || "one";
+    minSeed.value = config.minSeed || 0;
+    maxSeed.value = config.maxSeed || 2147483646;
+    threads.value = config.threads || 1;
+    maximumSeedAmount.value = config.maxSeedAmount || 1000;
+    pieceSequenceElement.value = config.pieceSequence || "";
   }
   
   function valueChanged() {

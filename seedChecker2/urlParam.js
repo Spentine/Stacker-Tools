@@ -172,6 +172,29 @@ function convertConfigTypeFind(config) {
   return byteArray;
 }
 
+function decodeConfigTypeFind(byteArray) {
+  const data = {};
+  // byte 1
+  const byte1 = byteArray[0];
+  data.version = (byte1 >> 2) & 0b111111;
+  data.randomizerType = (byte1 >> 1) & 0b1 ? "totalMayhem" : "7bag";
+  data.searchType = byte1 & 0b1 ? "all" : "one";
+  
+  // other numbers
+  data.minSeed = convertByteArrayToLong(byteArray.slice(1, 5));
+  data.maxSeed = convertByteArrayToLong(byteArray.slice(5, 9));
+  data.threads = byteArray[9] + 1; // 0-255, so add 1 to get 1-256
+  
+  let shiftAmount = 10;
+  if (data.searchType === "all") {
+    data.maxSeedAmount = convertByteArrayToLong(byteArray.slice(10, 14));
+    shiftAmount += 4;
+  }
+  data.pieceSequence = convertByteArrayToQueue(byteArray.slice(shiftAmount));
+  
+  return data;
+}
+
 function getUrlConfigTypeFind(config) {
   const byteArray = convertConfigTypeFind(config);
   // convert to base64 string
@@ -195,8 +218,33 @@ function getUrlConfigTypeFind(config) {
   return safe;
 }
 
+function decodeUrlConfigTypeFind(encoded) {
+  // reverse the replacements
+  const replacements = {
+    "~": "AAAA",
+    ".": "____",
+  };
+  for (const [key, value] of Object.entries(replacements)) {
+    encoded = encoded.replaceAll(key, value);
+  }
+  
+  // convert back to base64
+  const base64String = encoded
+    .replaceAll("-", "+") // replace - with +
+    .replaceAll("_", "/"); // replace _ with /
+  
+  // decode base64 to byte array
+  const byteArray = new Uint8Array([...atob(base64String)].map(char => char.charCodeAt(0)));
+  
+  return decodeConfigTypeFind(byteArray);
+}
+
 function getUrlConfig(config) {
   return getUrlConfigTypeFind(config);
 }
 
-export { getUrlConfig };
+function decodeUrlConfig(encoded) {
+  return decodeUrlConfigTypeFind(encoded);
+}
+
+export { getUrlConfig, decodeUrlConfig };
