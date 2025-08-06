@@ -3,6 +3,14 @@
 // number of workers
 let workerCount = navigator.hardwareConcurrency || 1;
 
+function setWorkerCount(count) {
+  workerCount = count;
+}
+
+function getWorkerCount() {
+  return workerCount;
+}
+
 function createWorkers(path="./ww.js", count=workerCount) {
   const workers = [];
   for (let i = 0; i < count; i++) {
@@ -112,4 +120,4 @@ function searchWW(workers, generationData) {
   });
 }
 
-export { createWorkers, workerCount, searchWW };
+export { createWorkers, getWorkerCount, setWorkerCount, searchWW };

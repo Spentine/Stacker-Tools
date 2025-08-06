@@ -3,7 +3,7 @@ import { lcg } from './processing/lcg.js';
 // 7-bag
 import { generateBags } from './processing/7bag/fy.js';
 import { generateQueueData } from './processing/7bag/data.js';
-import { createWorkers, workerCount, searchWW } from './processing/wwHandler.js';
+import { createWorkers, searchWW } from './processing/wwHandler.js';
 
 // total mayhem
 import { nextPieces, generateDataTotalMayhem } from './processing/totalMayhem/random.js';

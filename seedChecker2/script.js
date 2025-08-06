@@ -2,6 +2,7 @@ import { search } from "./checker.js";
 import { formatQueue } from "./util.js";
 import { getSeedInfo } from "./seedInfo.js";
 import { bound } from "./processing/lcg.js";
+import { getWorkerCount, setWorkerCount } from "./processing/wwHandler.js";
 
 async function main() {
   console.log("Script loaded.");
@@ -19,6 +20,8 @@ async function main() {
   const searchType = document.getElementById("search-type");
   const maximumSeedAmountContainer = document.getElementById("maximum-seed-amount-container");
   const maximumSeedAmount = document.getElementById("maximum-seed-amount");
+  
+  const threads = document.getElementById("threads");
   
   // retrieve-menu
   const retrieveMenu = document.getElementById("retrieve-menu");
@@ -68,14 +71,32 @@ async function main() {
     }
   });
   
+  // threads
+  threads.value = getWorkerCount();
+  threads.addEventListener("change", () => {
+    const newWorkerCount = Math.max(1, Math.min(Number(threads.value), 64));
+    setWorkerCount(newWorkerCount);
+    threads.value = newWorkerCount;
+    console.log(`Worker count set to ${newWorkerCount}`);
+  });
+  
   // retrieve-menu interactivity (none)
   
   // start
+  let started = false;
   startElement.addEventListener("click", async () => {
+    if (started) {
+      console.log("Already started.");
+      return;
+    }
+    
+    started = true;
+    outputElement.textContent = "Processing...";
+    
     if (modeSelect.value === "find") {
       const queue = pieceSequenceElement.value;
       console.log("Starting with queue:", queue);
-
+      
       const validResults = await search({
         queue,
         randomizer: randomizerType.value,
