@@ -24,6 +24,21 @@ Incomplete bags, however, will have many different numbers that are valid. To al
 
 URL query parameters should be provided to make it easier to share configurations. However, I want to prioritize having a shorter URL, so I will instead use only one query parameter to store all data.
 
+```js
+{
+  mode, randomizerType,
+  
+  searchType,
+  minSeed, maxSeed, threads, maxSeedAmount,
+  pieceSequence,
+  
+  seed
+}
+```
+
+AkGd1QgUAAAA
+BAAACa0AAACTCw
+
 ### Find Seed
 
 - **Version**: 1 `6 bits`
@@ -34,14 +49,6 @@ URL query parameters should be provided to make it easier to share configuration
 - **Threads**: `{uint8}` (1 - 256)
 - **Maximum Seed Amount**: `{uint32}` (1 - 2^31-2)
 - **Piece Sequence**: `{str}`
-
-```js
-{
-  randomizerType, searchType,
-  minSeed, maxSeed, threads, maxSeedAmount,
-  pieceSequence
-}
-```
 
 ### Retrieve Seed Information
 

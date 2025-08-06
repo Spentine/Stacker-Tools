@@ -48,25 +48,29 @@ async function main() {
   
   function getConfigFromFields() {
     const config = {
-      randomizerType: randomizerType.value || "7bag",
-      searchType: searchType.value || "one",
-      minSeed: Number(minSeed.value) || 0,
-      maxSeed: Number(maxSeed.value) || 2147483646,
-      threads: Number(threads.value) || 1,
-      maxSeedAmount: Number(maximumSeedAmount.value) || 1000,
-      pieceSequence: pieceSequenceElement.value || "",
+      mode: modeSelect.value,
+      randomizerType: randomizerType.value ?? "7bag",
+      searchType: searchType.value ?? "one",
+      minSeed: Number(minSeed.value) ?? 1,
+      maxSeed: Number(maxSeed.value) ?? 2147483646,
+      threads: Number(threads.value) ?? 1,
+      maxSeedAmount: Number(maximumSeedAmount.value) ?? 1000,
+      pieceSequence: pieceSequenceElement.value ?? "",
+      seed: Number(seedInput.value) ?? 0,
     }
     return config;
   }
   
   function setFieldsFromConfig(config) {
-    randomizerType.value = config.randomizerType || "7bag";
-    searchType.value = config.searchType || "one";
-    minSeed.value = config.minSeed || 0;
-    maxSeed.value = config.maxSeed || 2147483646;
-    threads.value = config.threads || 1;
-    maximumSeedAmount.value = config.maxSeedAmount || 1000;
-    pieceSequenceElement.value = config.pieceSequence || "";
+    modeSelect.value = config.mode ?? "find";
+    randomizerType.value = config.randomizerType ?? "7bag";
+    searchType.value = config.searchType ?? "one";
+    minSeed.value = config.minSeed ?? 1;
+    maxSeed.value = config.maxSeed ?? 2147483646;
+    threads.value = config.threads ?? 1;
+    maximumSeedAmount.value = config.maxSeedAmount ?? 1000;
+    pieceSequenceElement.value = config.pieceSequence ?? "";
+    seedInput.value = config.seed ?? 0;
   }
   
   function valueChanged() {
@@ -153,7 +157,11 @@ async function main() {
     console.log(`Worker count set to ${newWorkerCount}`);
   });
   
-  // retrieve-menu interactivity (none)
+  // retrieve-menu interactivity
+  
+  seedInput.addEventListener("change", () => {
+    valueChanged();
+  });
   
   // start
   let started = false;

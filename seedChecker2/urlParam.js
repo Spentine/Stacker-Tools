@@ -126,6 +126,8 @@ function convertByteArrayToQueue(byteArray) {
   return piecesStr;
 }
 
+// type find
+
 function convertConfigTypeFind(config) {
   // byte 1
   /*
@@ -173,7 +175,7 @@ function convertConfigTypeFind(config) {
 }
 
 function decodeConfigTypeFind(byteArray) {
-  const data = {};
+  const data = {mode: "find"};
   // byte 1
   const byte1 = byteArray[0];
   data.version = (byte1 >> 2) & 0b111111;
@@ -239,12 +241,103 @@ function decodeUrlConfigTypeFind(encoded) {
   return decodeConfigTypeFind(byteArray);
 }
 
+// type retrieve
+
+function getConfigTypeRetrieve(config) {
+  // byte 1
+  /*
+    [vvvvvvvr]
+    - version takes up 7 bits (version=1 right now)
+    - randomizer type takes up 1 bit
+  */
+  const version = 1 & 0b1111111; // 7 bits
+  const randomizerType = (config.randomizerType === "7bag") ? 0 : 1; // 1 bit
+  const byte = (version << 1) | randomizerType;
+  const byteArray1 = new Uint8Array(1);
+  
+  // float
+  const seed = convertNumberToByteArray(config.seed);
+  
+  // combine all
+  const byteArray = new Uint8Array(1 + seed.length);
+  byteArray[0] = byte;
+  byteArray.set(seed, 1);
+  
+  return byteArray;
+}
+
+function decodeConfigTypeRetrieve(byteArray) {
+  const data = {mode: "retrieve"};
+  // byte 1
+  const byte1 = byteArray[0];
+  data.version = (byte1 >> 1) & 0b1111111;
+  data.randomizerType = (byte1 & 0b1) ? "totalMayhem" : "7bag";
+  data.seed = convertByteArrayToNumber(byteArray.slice(1));
+  return data;
+}
+
+function getUrlConfigTypeRetrieve(config) {
+  const byteArray = getConfigTypeRetrieve(config);
+  // convert to base64 string
+  const base64String = btoa(String.fromCharCode(...byteArray));
+  
+  // replace special characters to make it URL safe
+  let safe = base64String
+    .replaceAll("+", "-") // replace + with -
+    .replaceAll("/", "_") // replace / with _
+    .replaceAll("=", ""); // remove padding
+  
+  return safe;
+}
+
+function decodeUrlConfigTypeRetrieve(encoded) {
+  // reverse the replacements
+  const replacements = {
+    /* there will probably be other special ones */
+  };
+  for (const [key, value] of Object.entries(replacements)) {
+    encoded = encoded.replaceAll(key, value);
+  }
+  
+  // convert back to base64
+  const base64String = encoded
+    .replaceAll("-", "+") // replace - with +
+    .replaceAll("_", "/"); // replace _ with /
+  
+  // decode base64 to byte array
+  const byteArray = new Uint8Array([...atob(base64String)].map(char => char.charCodeAt(0)));
+  
+  return decodeConfigTypeRetrieve(byteArray);
+}
+
+// functions irregardless of type
+
+function detectType(encoded) {
+  // these special character replacements are only found in type "find"
+  if (encoded.includes("~") || encoded.includes(".")) return "find";
+  
+  // the shortest "find" encoded string is 14 characters long
+  if (encoded.length > 13) return "find";
+  
+  // otherwise, it is type "retrieve"
+  return "retrieve";
+}
+
 function getUrlConfig(config) {
-  return getUrlConfigTypeFind(config);
+  if (config.mode === "find") {
+    return getUrlConfigTypeFind(config);
+  } else if (config.mode === "retrieve") {
+    return getUrlConfigTypeRetrieve(config);
+  }
+  throw new Error("Unknown mode in config: " + config);
 }
 
 function decodeUrlConfig(encoded) {
-  return decodeUrlConfigTypeFind(encoded);
+  if (detectType(encoded) === "find") {
+    return decodeUrlConfigTypeFind(encoded);
+  } else {
+    return decodeUrlConfigTypeRetrieve(encoded);
+  }
 }
 
 export { getUrlConfig, decodeUrlConfig };
