@@ -187,6 +187,8 @@ async function main() {
         maximumSeedAmount: Number(maximumSeedAmount.value),
       });
       
+      started = false;
+      
       if (!validResults.valid) {
         outputElement.textContent = validResults.reason;
         return;
@@ -210,6 +212,8 @@ async function main() {
     } else if (modeSelect.value === "retrieve") {
       const originalSeed = Number(seedInput.value);
       const seed = bound(seedInput.value);
+      
+      started = false;
       
       if (!seed) {
         outputElement.textContent = "Please enter a seed.";
